@@ -17,11 +17,15 @@ export default function SwipeableYesNo({ question, value, onChange }: SwipeableY
   const animateSwipe = async (direction: 'left' | 'right') => {
     const isRight = direction === 'right';
     await controls.start({
-      x: isRight ? 500 : -500,
-      rotate: isRight ? 45 : -45,
-      scale: 0.8,
+      x: isRight ? window.innerWidth : -window.innerWidth,
+      rotate: isRight ? 30 : -30,
+      scale: 0.9,
       opacity: 0,
-      transition: { duration: 0.5, ease: [0.32, 0.72, 0, 1] }
+      transition: { 
+        duration: 0.4, 
+        ease: [0.32, 0.72, 0, 1],
+        opacity: { duration: 0.2 }
+      }
     });
 
     onChange(isRight);
@@ -29,20 +33,21 @@ export default function SwipeableYesNo({ question, value, onChange }: SwipeableY
     await controls.set({ x: 0, rotate: 0, scale: 1, opacity: 0 });
     await controls.start({ 
       opacity: 1,
-      transition: { duration: 0.3 }
+      transition: { duration: 0.2 }
     });
   };
 
   const handleDrag = (event: any, info: PanInfo) => {
     setDragX(info.offset.x);
+    setIsDragging(true);
   };
 
   const handleDragEnd = async (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const threshold = 100;
+    const threshold = window.innerWidth * 0.15; // 15% of screen width
     const velocity = Math.abs(info.velocity.x);
     const offset = Math.abs(info.offset.x);
 
-    if (offset > threshold || velocity > 500) {
+    if (offset > threshold || velocity > 300) {
       const direction = info.offset.x > 0 ? 'right' : 'left';
       await animateSwipe(direction);
     } else {
@@ -52,8 +57,8 @@ export default function SwipeableYesNo({ question, value, onChange }: SwipeableY
         scale: 1,
         transition: { 
           type: "spring",
-          stiffness: 400,
-          damping: 30
+          stiffness: 500,
+          damping: 25
         }
       });
     }
@@ -73,7 +78,7 @@ export default function SwipeableYesNo({ question, value, onChange }: SwipeableY
   const noOpacity = Math.min(-dragX / 100, 1);
 
   return (
-    <div className="relative w-full max-w-md mx-auto h-[400px] select-none">
+    <div className="relative w-full max-w-md mx-auto h-[350px] sm:h-[400px] select-none touch-none">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -131,7 +136,7 @@ export default function SwipeableYesNo({ question, value, onChange }: SwipeableY
       <motion.div
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.12}
+        dragElastic={0.15}
         onDrag={handleDrag}
         onDragStart={() => setIsDragging(true)}
         onDragEnd={handleDragEnd}
@@ -140,51 +145,51 @@ export default function SwipeableYesNo({ question, value, onChange }: SwipeableY
           rotate: rotateValue,
           scale: scaleValue
         }}
-        className="absolute inset-0 bg-white rounded-3xl shadow-lg cursor-grab active:cursor-grabbing overflow-hidden"
+        className="absolute inset-0 bg-white rounded-2xl sm:rounded-3xl shadow-lg cursor-grab active:cursor-grabbing overflow-hidden touch-pan-y"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-gray-50" />
         
         {/* Card content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-          <div className="w-full max-w-sm text-center space-y-6">
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-4 sm:p-8">
+          <div className="w-full max-w-sm text-center space-y-4 sm:space-y-6">
             <motion.div 
-              className="inline-flex items-center space-x-2 mb-6"
+              className="inline-flex items-center space-x-2 mb-4 sm:mb-6"
               animate={{ scale: isDragging ? 1.1 : 1 }}
             >
-              <Sparkles className="w-5 h-5 text-yellow-400" />
-              <span className="text-sm font-medium text-gray-500">Swipe to answer</span>
-              <Sparkles className="w-5 h-5 text-yellow-400" />
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
+              <span className="text-xs sm:text-sm font-medium text-gray-500">Swipe to answer</span>
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
             </motion.div>
 
-            <h3 className="text-2xl font-bold text-gray-800 leading-relaxed">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-800 leading-relaxed">
               {question}
             </h3>
             
-            <div className="text-xl font-semibold text-primary/80">
+            <div className="text-lg sm:text-xl font-semibold text-primary/80">
               {value ? 'Yes' : 'No'}
             </div>
 
             <motion.div 
-              className="pt-6 flex justify-center space-x-8 text-gray-400"
+              className="pt-4 sm:pt-6 flex justify-center space-x-6 sm:space-x-8 text-gray-400"
               animate={{ opacity: isDragging ? 0.5 : 1 }}
             >
-              <div className="flex flex-col items-center space-y-2">
-                <div className="p-2 bg-gray-100 rounded-full">
-                  <ThumbsDown className="w-4 h-4" />
+              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+                <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full">
+                  <ThumbsDown className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>
-                <span className="text-xs">Swipe left</span>
+                <span className="text-[10px] sm:text-xs">Swipe left</span>
               </div>
-              <div className="flex flex-col items-center space-y-2">
-                <div className="p-2 bg-gray-100 rounded-full">
-                  <ThumbsUp className="w-4 h-4" />
+              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+                <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full">
+                  <ThumbsUp className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>
-                <span className="text-xs">Swipe right</span>
+                <span className="text-[10px] sm:text-xs">Swipe right</span>
               </div>
             </motion.div>
 
-            <div className="text-sm text-gray-400 mt-4">
+            <div className="text-xs sm:text-sm text-gray-400 mt-2 sm:mt-4">
               Or use arrow keys ← →
             </div>
           </div>

@@ -59,6 +59,7 @@ import ModuleTest from './pages/ModuleTest';
 import Achievements from './pages/Achievements';
 import StudentProfile from './pages/StudentProfile';
 import TestResults from './pages/TestResults';
+import DiscussionView from './pages/DiscussionView';
 
 const AppLayout = () => {
   return (
@@ -107,6 +108,7 @@ const router = createBrowserRouter(
 
       {/* Student routes */}
       <Route path="/student-dashboard" element={<StudentDashboard />} />
+      <Route path="/student/dashboard" element={<StudentDashboard />} />
       <Route path="/student/profile" element={<Profile />} />
       <Route path="/student/courses" element={<Courses />} />
       <Route path="/student/calendar" element={<Calendar />} />
@@ -114,6 +116,7 @@ const router = createBrowserRouter(
       <Route path="/student/support" element={<Support />} />
       <Route path="/student/resources" element={<Resources />} />
       <Route path="/student/community" element={<Community />} />
+      <Route path="/community/discussion/:id" element={<DiscussionView />} />
       <Route path="/student/community/:id" element={<DiscussionDetails />} />
       <Route path="/student/practice-test" element={<PracticeTest />} />
       <Route path="/student/quick-review" element={<QuickReview />} />

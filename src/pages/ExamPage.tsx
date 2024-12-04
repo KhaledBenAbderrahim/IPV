@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Clock,
   Flag,
@@ -200,255 +201,170 @@ export default function ExamPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
       {/* Header */}
-      <header className="fixed top-0 inset-x-0 bg-white/80 border-b border-slate-200 backdrop-blur-lg z-50">
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-16 flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <h1 className="text-xl font-bold text-slate-800 tracking-tight">{mockIHKExam.title}</h1>
-              <div className="hidden md:flex items-center px-3 py-1 bg-blue-50 rounded-full">
-                <span className="text-sm font-medium text-blue-700">Official Exam Environment</span>
-              </div>
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            <div className="flex items-center">
+              <h1 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
+                {mockIHKExam.title}
+              </h1>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center px-4 py-2.5 bg-slate-800 text-white rounded-xl shadow-sm">
-                <Clock className="h-5 w-5 mr-2 text-slate-300" />
-                <span className="font-mono text-lg">{formatTime(timeLeft)}</span>
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="flex items-center px-3 py-1.5 sm:px-4 sm:py-2 bg-primary/5 text-primary rounded-lg">
+                <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="ml-2 text-sm sm:text-base font-medium">{formatTime(timeLeft)}</span>
               </div>
               <button
                 onClick={() => setShowExitModal(true)}
-                className="p-2 rounded-lg hover:bg-red-50 text-slate-600 hover:text-red-600 transition-all duration-200"
+                className="p-1.5 sm:p-2 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors active:scale-95 touch-manipulation"
               >
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5 sm:h-6 sm:w-6" />
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main content */}
-      <div className="pt-24 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6 grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Question navigation */}
-            <div className="lg:col-span-1 space-y-6">
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sticky top-24">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-slate-800">Questions</h2>
-                  <div className="flex items-center px-3 py-1 bg-blue-50 rounded-lg">
-                    <BarChart className="h-4 w-4 text-blue-600 mr-1" />
-                    <span className="text-sm font-medium text-blue-700">
-                      {Object.keys(answers).length}/{mockIHKExam.questions.length}
-                    </span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-5 gap-2">
-                  {mockIHKExam.questions.map((question, index) => (
-                    <button
-                      key={question.id}
-                      onClick={() => setCurrentQuestion(index)}
-                      className={`relative p-3 text-sm font-medium rounded-xl transition-all duration-200 ${
-                        currentQuestion === index
-                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-200/50 transform scale-105 ring-2 ring-blue-600 ring-offset-2'
-                          : answers[question.id]
-                          ? 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                      }`}
-                    >
-                      {index + 1}
-                      {flagged.includes(question.id) && (
-                        <Flag className="absolute -top-1 -right-1 h-3 w-3 text-amber-500" fill="currentColor" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="mt-6 space-y-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="flex items-center text-sm">
-                    <div className="w-4 h-4 rounded-lg bg-blue-50 border border-blue-200 mr-3" />
-                    <span className="text-slate-600">Answered</span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <div className="w-4 h-4 rounded-lg bg-slate-100 border border-slate-200 mr-3" />
-                    <span className="text-slate-600">Unanswered</span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <Flag className="h-4 w-4 text-amber-500 mr-3" fill="currentColor" />
-                    <span className="text-slate-600">Flagged for Review</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-amber-50 rounded-2xl p-6 border border-amber-200">
-                <div className="flex items-start space-x-3">
-                  <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium text-amber-800">Exam Guidelines</h3>
-                    <ul className="mt-2 text-sm text-amber-700 space-y-1">
-                      <li>• Stay focused on your screen</li>
-                      <li>• No external resources allowed</li>
-                      <li>• Complete all questions</li>
-                      <li>• Review before submission</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Question content */}
-            <div className="lg:col-span-3">
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
-                <div className="flex items-center justify-between mb-8">
-                  <div>
-                    <div className="flex items-center space-x-3">
-                      <span className="px-3 py-1 bg-blue-50 rounded-full text-sm font-medium text-blue-700">
-                        Question {currentQuestion + 1} of {mockIHKExam.questions.length}
-                      </span>
-                      {flagged.includes(mockIHKExam.questions[currentQuestion].id) && (
-                        <span className="px-3 py-1 bg-amber-50 rounded-full text-sm font-medium text-amber-700 flex items-center">
-                          <Flag className="h-3.5 w-3.5 mr-1" />
-                          Flagged
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-2xl font-bold text-slate-800 mt-3">
-                      {mockIHKExam.course}
-                    </h3>
-                  </div>
-                  <button
-                    onClick={toggleFlag}
-                    className={`flex items-center px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                      flagged.includes(mockIHKExam.questions[currentQuestion].id)
-                        ? 'bg-amber-50 text-amber-700 hover:bg-amber-100'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
-                  >
-                    <Flag className="h-4 w-4 mr-2" />
-                    {flagged.includes(mockIHKExam.questions[currentQuestion].id) ? 'Unflag' : 'Flag for Review'}
-                  </button>
-                </div>
-
-                <div className="prose max-w-none">
-                  <p className="text-slate-700 text-lg leading-relaxed mb-8">
-                    {mockIHKExam.questions[currentQuestion].content}
-                  </p>
-                </div>
-
-                <div className="mt-8">
-                  {renderQuestion()}
-                </div>
-
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-200">
-                  <button
-                    onClick={() => setCurrentQuestion((prev) => Math.max(0, prev - 1))}
-                    disabled={currentQuestion === 0}
-                    className="flex items-center px-5 py-2.5 text-sm font-medium rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                  >
-                    <ChevronLeft className="h-4 w-4 mr-2" />
-                    Previous
-                  </button>
-
-                  {currentQuestion === mockIHKExam.questions.length - 1 ? (
-                    <button
-                      onClick={() => setShowSubmitModal(true)}
-                      className="flex items-center px-6 py-2.5 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-200/50 transition-all duration-200"
-                    >
-                      Submit Exam
-                      <CheckCircle2 className="h-4 w-4 ml-2" />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() =>
-                        setCurrentQuestion((prev) =>
-                          Math.min(mockIHKExam.questions.length - 1, prev + 1)
-                        )
-                      }
-                      className="flex items-center px-5 py-2.5 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-200/50 transition-all duration-200"
-                    >
-                      Next
-                      <ChevronRight className="h-4 w-4 ml-2" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
+          {/* Question Header */}
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <span className="text-sm sm:text-base text-gray-600">
+              Question {currentQuestion + 1} of {mockIHKExam.questions.length}
+            </span>
+            <button
+              onClick={toggleFlag}
+              className={`flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base transition-colors active:scale-95 touch-manipulation ${
+                flagged.includes(mockIHKExam.questions[currentQuestion].id)
+                  ? 'bg-yellow-50 text-yellow-600'
+                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <Flag className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="ml-2">Flag</span>
+            </button>
           </div>
-        </div>
-      </div>
 
-      {/* Exit Modal */}
-      {showExitModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-200">
-            <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-red-100 mx-auto">
-              <AlertCircle className="h-7 w-7 text-red-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-slate-800 text-center mt-4">
-              Exit Examination?
-            </h3>
-            <p className="text-slate-600 text-center mt-2">
-              Warning: All progress will be lost if you exit now. This action cannot be undone.
+          {/* Question Content */}
+          <div className="space-y-4 sm:space-y-6">
+            <p className="text-base sm:text-lg text-gray-900">
+              {mockIHKExam.questions[currentQuestion].content}
             </p>
-            <div className="flex items-center justify-end space-x-4 mt-8">
-              <button
-                onClick={() => setShowExitModal(false)}
-                className="px-5 py-2.5 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
-              >
-                Continue Exam
-              </button>
-              <Link 
-                to="/student-dashboard" 
-                className="px-5 py-2.5 text-sm font-medium rounded-xl bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-200/50 transition-all duration-200"
-              >
-                Exit Exam
-              </Link>
-            </div>
+            <div className="mt-4 sm:mt-6">{renderQuestion()}</div>
           </div>
-        </div>
-      )}
 
-      {/* Submit Modal */}
-      {showSubmitModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-200">
-            <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-100 mx-auto">
-              <CheckCircle2 className="h-7 w-7 text-blue-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-slate-800 text-center mt-4">
-              Submit Examination?
-            </h3>
-            <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">Questions Answered</span>
-                  <span className="font-medium text-slate-900">{Object.keys(answers).length}/{mockIHKExam.questions.length}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">Time Remaining</span>
-                  <span className="font-medium text-slate-900">{formatTime(timeLeft)}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">Flagged Questions</span>
-                  <span className="font-medium text-slate-900">{flagged.length}</span>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center justify-end space-x-4 mt-8">
+          {/* Navigation */}
+          <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
+            <button
+              onClick={() => setCurrentQuestion((prev) => Math.max(0, prev - 1))}
+              disabled={currentQuestion === 0}
+              className="flex items-center px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base font-medium text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors active:scale-95 touch-manipulation"
+            >
+              <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-1" />
+              Previous
+            </button>
+            {currentQuestion === mockIHKExam.questions.length - 1 ? (
               <button
-                onClick={() => setShowSubmitModal(false)}
-                className="px-5 py-2.5 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
-              >
-                Review Answers
-              </button>
-              <button 
-                onClick={handleSubmit}
-                className="px-6 py-2.5 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-200/50 transition-all duration-200"
+                onClick={() => setShowSubmitModal(true)}
+                className="px-4 py-1.5 sm:px-6 sm:py-2 bg-primary text-sm sm:text-base font-medium rounded-lg text-white hover:bg-primary-dark transition-colors active:scale-95 touch-manipulation"
               >
                 Submit Exam
               </button>
-            </div>
+            ) : (
+              <button
+                onClick={() => setCurrentQuestion((prev) => Math.min(mockIHKExam.questions.length - 1, prev + 1))}
+                className="flex items-center px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base font-medium text-gray-600 hover:text-gray-900 transition-colors active:scale-95 touch-manipulation"
+              >
+                Next
+                <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 ml-1" />
+              </button>
+            )}
           </div>
         </div>
-      )}
+      </main>
+
+      {/* Exit Modal */}
+      <AnimatePresence>
+        {showExitModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="bg-white rounded-xl sm:rounded-2xl shadow-lg max-w-md w-full p-4 sm:p-6"
+            >
+              <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-50 mx-auto">
+                <AlertTriangle className="h-6 w-6 sm:h-7 sm:w-7 text-red-600" />
+              </div>
+              <h3 className="mt-4 text-lg sm:text-xl font-semibold text-gray-900 text-center">Exit Exam?</h3>
+              <p className="mt-2 text-sm sm:text-base text-gray-600 text-center">
+                Are you sure you want to exit? Your progress will be lost.
+              </p>
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-2 sm:gap-4">
+                <button
+                  onClick={() => setShowExitModal(false)}
+                  className="flex-1 px-4 py-2 sm:px-6 sm:py-2.5 border border-gray-300 text-sm sm:text-base font-medium rounded-lg text-gray-700 hover:bg-gray-50 transition-colors active:scale-95 touch-manipulation"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => navigate('/student/dashboard')}
+                  className="flex-1 px-4 py-2 sm:px-6 sm:py-2.5 bg-red-600 text-sm sm:text-base font-medium rounded-lg text-white hover:bg-red-700 transition-colors active:scale-95 touch-manipulation"
+                >
+                  Exit
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Submit Modal */}
+      <AnimatePresence>
+        {showSubmitModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="bg-white rounded-xl sm:rounded-2xl shadow-lg max-w-md w-full p-4 sm:p-6"
+            >
+              <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary/10 mx-auto">
+                <AlertCircle className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+              </div>
+              <h3 className="mt-4 text-lg sm:text-xl font-semibold text-gray-900 text-center">Submit Exam?</h3>
+              <p className="mt-2 text-sm sm:text-base text-gray-600 text-center">
+                Are you sure you want to submit? You can't change your answers after submission.
+              </p>
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-2 sm:gap-4">
+                <button
+                  onClick={() => setShowSubmitModal(false)}
+                  className="flex-1 px-4 py-2 sm:px-6 sm:py-2.5 border border-gray-300 text-sm sm:text-base font-medium rounded-lg text-gray-700 hover:bg-gray-50 transition-colors active:scale-95 touch-manipulation"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSubmit}
+                  className="flex-1 px-4 py-2 sm:px-6 sm:py-2.5 bg-primary text-sm sm:text-base font-medium rounded-lg text-white hover:bg-primary-dark transition-colors active:scale-95 touch-manipulation"
+                >
+                  Submit
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

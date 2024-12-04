@@ -5,6 +5,7 @@ import {
   Archive, Clock, Grid, List, ChevronDown, BookOpen, Folder
 } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const resources = [
   {
@@ -56,6 +57,7 @@ export default function Resources() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('newest');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredResources = resources.filter(resource => {
     const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -73,192 +75,189 @@ export default function Resources() {
 
   return (
     <DashboardLayout role={isHR ? 'hr' : 'student'}>
-      <div className="p-4 sm:p-8 bg-gray-50 min-h-screen">
-        <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
-          <div className="bg-white rounded-2xl p-6 mb-8 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <div className="flex items-center space-x-3">
-                <div className="p-3 bg-primary/10 rounded-xl">
-                  <CategoryIcon className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900">Learning Resources</h1>
-                  <p className="text-gray-500 mt-1">Access study materials and templates</p>
+      <div className="min-h-screen bg-slate-50">
+        {/* Mobile Header */}
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 px-4 py-3 sm:hidden"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <CategoryIcon className="h-5 w-5 text-primary" />
+              </div>
+              <h1 className="text-base font-semibold text-gray-900">Resources</h1>
+            </div>
+            <div className="flex items-center space-x-2">
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+                className="p-2 text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50 active:bg-gray-100"
+              >
+                <Filter className="h-5 w-5" />
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+                className="p-2 text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50 active:bg-gray-100"
+              >
+                {viewMode === 'grid' ? <List className="h-5 w-5" /> : <Grid className="h-5 w-5" />}
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="p-3 sm:p-4 lg:p-6">
+          <div className="max-w-7xl mx-auto">
+            {/* Desktop Header - Hidden on Mobile */}
+            <div className="hidden sm:block bg-white rounded-xl p-6 mb-6 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-primary/10 rounded-xl">
+                    <CategoryIcon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Learning Resources</h1>
+                    <p className="text-sm text-gray-500 mt-1">Access study materials and templates</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Search and Filters */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <div className="relative flex-grow max-w-xl">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            {/* Search and Filters - Mobile Optimized */}
+            <div className="bg-white rounded-lg shadow-sm mb-3 sm:mb-4 overflow-hidden">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search resources..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 border-b border-gray-100 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm"
                 />
               </div>
               
-              <div className="flex items-center gap-3">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white"
-                >
-                  <option value="newest">Newest First</option>
-                  <option value="popular">Most Popular</option>
-                </select>
-                
-                <div className="flex items-center bg-gray-100 rounded-xl p-1">
-                  <button
-                    onClick={() => setViewMode('grid')}
-                    className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'text-gray-500'}`}
+              <AnimatePresence>
+                {isFilterOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="border-t border-gray-100"
                   >
-                    <Grid className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('list')}
-                    className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-white shadow-sm' : 'text-gray-500'}`}
-                  >
-                    <List className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
+                    <div className="p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-700">Sort by</span>
+                        <select
+                          value={sortBy}
+                          onChange={(e) => setSortBy(e.target.value)}
+                          className="text-sm px-2 py-1 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white"
+                        >
+                          <option value="newest">Newest First</option>
+                          <option value="popular">Most Popular</option>
+                        </select>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
 
-          {/* Categories */}
-          <div className="flex overflow-x-auto gap-3 mb-8 pb-2 scrollbar-hide">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <button
-                  key={category.name}
-                  onClick={() => setSelectedCategory(category.name)}
-                  className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl whitespace-nowrap transition-all ${
-                    selectedCategory === category.name
-                      ? 'bg-primary text-white shadow-lg shadow-primary/30'
-                      : 'bg-white text-gray-600 hover:bg-gray-50'
+            {/* Categories - Mobile Optimized */}
+            <div className="flex overflow-x-auto gap-2 mb-3 sm:mb-4 pb-1 scrollbar-hide -mx-3 px-3">
+              {categories.map((category) => {
+                const Icon = category.icon;
+                return (
+                  <motion.button
+                    key={category.name}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelectedCategory(category.name)}
+                    className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all text-sm ${
+                      selectedCategory === category.name
+                        ? 'bg-primary text-white shadow-md shadow-primary/30'
+                        : 'bg-white text-gray-600 hover:bg-gray-50 active:bg-gray-100'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="font-medium">{category.label}</span>
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* Resources Grid/List - Mobile Optimized */}
+            <div className={`grid gap-3 sm:gap-4 ${
+              viewMode === 'grid' 
+                ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' 
+                : 'grid-cols-1'
+            }`}>
+              {filteredResources.map((resource) => (
+                <motion.div
+                  key={resource.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className={`group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all ${
+                    viewMode === 'list' ? 'flex' : ''
                   }`}
                 >
-                  <Icon className="h-5 w-5" />
-                  <span className="font-medium">{category.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Resources Grid/List */}
-          {viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredResources.map((resource) => (
-                <div
-                  key={resource.id}
-                  className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow"
-                >
-                  <div className="aspect-video relative overflow-hidden bg-gray-100">
+                  <div className={`relative ${
+                    viewMode === 'list' 
+                      ? 'w-24 sm:w-32' 
+                      : 'aspect-video'
+                  }`}>
                     <img
                       src={resource.thumbnail}
                       alt={resource.title}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/90 text-gray-900">
+                    <div className="absolute bottom-2 left-2">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white/90 text-gray-900">
                         {resource.category}
                       </span>
                     </div>
                   </div>
                   
-                  <div className="p-5">
-                    <h3 className="font-semibold text-gray-900 mb-2">{resource.title}</h3>
-                    <p className="text-sm text-gray-500 mb-4">{resource.description}</p>
+                  <div className="p-3 flex-1">
+                    <h3 className="font-semibold text-gray-900 text-sm mb-1 line-clamp-2">{resource.title}</h3>
+                    <p className="text-xs text-gray-500 mb-2 line-clamp-2">{resource.description}</p>
                     
-                    <div className="flex items-center justify-between text-sm text-gray-500">
-                      <div className="flex items-center space-x-2">
-                        <Clock className="h-4 w-4" />
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center space-x-1">
+                        <Clock className="h-3.5 w-3.5" />
                         <span>{resource.lastUpdated}</span>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Download className="h-4 w-4" />
+                      <div className="flex items-center space-x-1">
+                        <Download className="h-3.5 w-3.5" />
                         <span>{resource.downloads}</span>
                       </div>
                     </div>
                     
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                      <span className="text-sm font-medium text-gray-500">{resource.type} • {resource.size}</span>
-                      <div className="flex items-center space-x-2">
-                        <button className="p-2 text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50 transition-colors">
-                          <Download className="h-5 w-5" />
-                        </button>
-                        <button className="p-2 text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50 transition-colors">
-                          <ExternalLink className="h-5 w-5" />
-                        </button>
+                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
+                      <span className="text-xs font-medium text-gray-500">{resource.type} • {resource.size}</span>
+                      <div className="flex items-center space-x-1">
+                        <motion.button 
+                          whileTap={{ scale: 0.95 }}
+                          className="p-1.5 text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-all"
+                        >
+                          <Download className="h-4 w-4" />
+                        </motion.button>
+                        <motion.button 
+                          whileTap={{ scale: 0.95 }}
+                          className="p-1.5 text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-all"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </motion.button>
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          ) : (
-            <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Name</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Category</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Type</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Size</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Downloads</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Last Updated</th>
-                      <th className="px-6 py-4 text-right text-sm font-medium text-gray-500">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredResources.map((resource) => (
-                      <tr
-                        key={resource.id}
-                        className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                      >
-                        <td className="px-6 py-4">
-                          <div className="flex items-center">
-                            <FileText className="h-5 w-5 text-primary mr-3" />
-                            <div>
-                              <div className="text-gray-900 font-medium">{resource.title}</div>
-                              <div className="text-sm text-gray-500">{resource.description}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                            {resource.category}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 text-gray-500">{resource.type}</td>
-                        <td className="px-6 py-4 text-gray-500">{resource.size}</td>
-                        <td className="px-6 py-4 text-gray-500">{resource.downloads}</td>
-                        <td className="px-6 py-4 text-gray-500">{resource.lastUpdated}</td>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center justify-end space-x-3">
-                            <button className="p-2 text-gray-500 hover:text-primary transition-colors">
-                              <Download className="h-5 w-5" />
-                            </button>
-                            <button className="p-2 text-gray-500 hover:text-primary transition-colors">
-                              <ExternalLink className="h-5 w-5" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </DashboardLayout>

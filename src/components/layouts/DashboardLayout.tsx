@@ -98,10 +98,10 @@ export default function DashboardLayout({ children, role: propRole }: DashboardL
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile menu button */}
-      <div className="lg:hidden fixed bottom-4 right-4 z-50">
+      <div className="lg:hidden fixed bottom-6 right-6 z-50">
         <button
           onClick={toggleMobileMenu}
-          className="p-3 rounded-full bg-primary shadow-lg text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all"
+          className="p-4 rounded-full bg-primary shadow-lg text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all active:scale-95"
         >
           {isMobileMenuOpen ? (
             <X className="h-6 w-6" />
@@ -112,30 +112,34 @@ export default function DashboardLayout({ children, role: propRole }: DashboardL
       </div>
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 transform lg:transform-none lg:opacity-100 w-72 bg-white shadow-xl z-40 transition-all duration-300 ease-in-out ${
+      <aside className={`fixed inset-y-0 left-0 transform lg:transform-none lg:opacity-100 w-[85vw] sm:w-80 lg:w-72 bg-white shadow-xl z-40 transition-all duration-300 ease-in-out ${
         isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 lg:translate-x-0 lg:opacity-100'
       }`}>
-        <div className="flex h-16 items-center justify-center border-b border-gray-100">
-          <Link to="/" className="flex items-center space-x-3 px-4">
-            <GraduationCap className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold text-primary">
+        <div className="flex h-16 sm:h-20 items-center justify-center border-b border-gray-100">
+          <Link 
+            to="/" 
+            className="flex items-center space-x-3 px-4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
+            <span className="text-lg sm:text-xl font-bold text-primary">
               EduMaster Pro
             </span>
           </Link>
         </div>
 
-        <div className="p-4">
+        <div className="p-3 sm:p-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <input
               type="text"
               placeholder="Search..."
-              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              className="w-full pl-10 pr-4 py-2.5 sm:py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
         </div>
 
-        <nav className="mt-2 px-3 space-y-1 overflow-y-auto max-h-[calc(100vh-12rem)]">
+        <nav className="mt-2 px-2 sm:px-3 space-y-0.5 sm:space-y-1 overflow-y-auto max-h-[calc(100vh-14rem)]">
           {navigation.map((item) => {
             const isActive = location.pathname === item.href || 
                            location.pathname.startsWith(item.href + '/');
@@ -144,16 +148,16 @@ export default function DashboardLayout({ children, role: propRole }: DashboardL
                 key={item.name}
                 to={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+                className={`flex items-center px-3 sm:px-4 py-3 sm:py-3 text-sm font-medium rounded-xl transition-all active:scale-[0.98] ${
                   isActive
                     ? 'bg-primary text-white shadow-md hover:shadow-lg hover:bg-primary-dark'
                     : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
-                <item.icon className={`mr-3 h-5 w-5 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                {item.name}
+                <item.icon className={`mr-3 h-5 w-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                <span className="truncate">{item.name}</span>
                 {item.name === 'Notifications' && unreadCount > 0 && (
-                  <span className="ml-auto bg-red-500 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+                  <span className="ml-auto bg-red-500 text-white text-xs font-medium px-2 py-0.5 rounded-full min-w-[1.25rem] text-center">
                     {unreadCount}
                   </span>
                 )}
@@ -162,8 +166,8 @@ export default function DashboardLayout({ children, role: propRole }: DashboardL
           })}
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100 bg-white">
-          <div className="flex items-center space-x-3 p-2 rounded-xl hover:bg-gray-50 transition-all">
+        <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 border-t border-gray-100 bg-white">
+          <div className="flex items-center space-x-3 p-2 rounded-xl hover:bg-gray-50 active:bg-gray-100 transition-all">
             <img
               src={profileImage}
               alt="Profile"
@@ -179,7 +183,7 @@ export default function DashboardLayout({ children, role: propRole }: DashboardL
             </div>
             <button
               onClick={handleSignOut}
-              className="p-2 text-gray-500 hover:text-red-500 rounded-lg hover:bg-red-50 transition-all"
+              className="p-2.5 text-gray-500 hover:text-red-500 rounded-xl hover:bg-red-50 active:bg-red-100 transition-all"
             >
               <LogOut className="h-5 w-5" />
             </button>
@@ -190,7 +194,7 @@ export default function DashboardLayout({ children, role: propRole }: DashboardL
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 lg:hidden transition-all"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -199,7 +203,7 @@ export default function DashboardLayout({ children, role: propRole }: DashboardL
       <div className="lg:pl-72">
         {/* Header */}
         <header className={`fixed top-0 right-0 left-0 lg:left-72 z-20 transition-all ${
-          isScrolled ? 'bg-white/80 backdrop-blur-sm shadow-sm' : 'bg-transparent'
+          isScrolled ? 'bg-white/80 backdrop-blur-lg shadow-sm' : 'bg-white'
         }`}>
           <div className="flex items-center justify-between h-16 px-4 lg:px-8">
             <h1 className="text-xl font-semibold text-gray-900">

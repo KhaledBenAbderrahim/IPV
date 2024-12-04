@@ -50,19 +50,31 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <Hero />
+      
+      {/* Hero Section */}
+      <div className="relative">
+        <Hero />
+      </div>
 
       {/* Features Section */}
-      <Features />
+      <div className="relative">
+        <Features />
+      </div>
 
       {/* About Section */}
-      <About />
+      <div className="relative">
+        <About />
+      </div>
 
       {/* Testimonials Section */}
-      <Testimonials />
+      <div className="relative">
+        <Testimonials />
+      </div>
 
       {/* Pricing Section */}
-      <Pricing />
+      <div className="relative">
+        <Pricing />
+      </div>
 
       <Footer />
 

@@ -3,6 +3,27 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, GraduationCap, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const NavButton = ({ onClick, children }: { onClick: () => void; children: React.ReactNode }) => (
+  <motion.button
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.95 }}
+    onClick={onClick}
+    className="px-3 sm:px-4 py-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 text-sm sm:text-base font-medium transition-all"
+  >
+    {children}
+  </motion.button>
+);
+
+const MobileNavButton = ({ onClick, children }: { onClick: () => void; children: React.ReactNode }) => (
+  <motion.button
+    whileTap={{ scale: 0.98 }}
+    onClick={onClick}
+    className="w-full px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100/70 text-left text-base font-medium transition-all active:bg-gray-200/50"
+  >
+    {children}
+  </motion.button>
+);
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,37 +48,62 @@ export default function Navbar() {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    } else if (location.pathname !== '/') {
-      navigate('/#' + sectionId);
+    const scrollToElement = () => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const offset = window.innerWidth < 768 ? 60 : 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    };
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(scrollToElement, 500);
+    } else {
+      scrollToElement();
     }
+  };
+
+  const handleMobileNavClick = (sectionId: string) => {
+    setIsOpen(false);
+    setTimeout(() => {
+      scrollToSection(sectionId);
+    }, 100);
   };
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed w-full z-50"
+      className={`fixed w-full z-50 ${isOpen ? 'bg-white' : ''}`}
     >
       <div className={`backdrop-blur-md transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 shadow-lg' : 'bg-transparent'
+        isScrolled || isOpen ? 'bg-white/90 shadow-lg' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo */}
             <Link to="/" className="group flex items-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent blur-lg opacity-30 group-hover:opacity-40 transition-opacity" />
-                <GraduationCap className="relative h-10 w-10 text-primary group-hover:scale-110 transition-transform" />
+                <GraduationCap className="relative h-8 w-8 sm:h-10 sm:w-10 text-primary group-hover:scale-110 transition-transform" />
               </div>
-              <span className="ml-3 text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 EduMaster Pro
               </span>
             </Link>
             
+            {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <div className="ml-10 flex items-center space-x-1">
+              <div className="flex items-center space-x-1">
                 <NavButton onClick={() => scrollToSection('features')}>
                   Features
                 </NavButton>
@@ -71,43 +117,56 @@ export default function Navbar() {
                   Pricing
                 </NavButton>
                 
-                <div className="w-px h-6 bg-gray-200 mx-4" />
+                <div className="w-px h-5 bg-gray-200 mx-3" />
                 
                 <motion.button 
                   whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('/login')} 
-                  className="px-5 py-2.5 rounded-xl text-primary hover:text-primary/80 font-medium transition-colors"
+                  className="px-4 py-2 rounded-lg text-primary hover:text-primary/80 text-sm font-medium transition-all hover:bg-primary/5"
                 >
                   Login
                 </motion.button>
                 
                 <motion.button 
                   whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('/register')} 
-                  className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white px-5 py-2.5 rounded-xl font-medium transition-opacity shadow-lg shadow-primary/25"
+                  className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all active:shadow-sm shadow-md shadow-primary/20"
                 >
                   Register
                 </motion.button>
               </div>
             </div>
             
+            {/* Mobile Menu Button */}
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-all active:bg-gray-200"
+              aria-label="Toggle menu"
             >
-              {isOpen ? (
-                <X className="h-6 w-6 text-dark" />
-              ) : (
-                <Menu className="h-6 w-6 text-dark" />
-              )}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isOpen ? 'close' : 'menu'}
+                  initial={{ opacity: 0, rotate: -90 }}
+                  animate={{ opacity: 1, rotate: 0 }}
+                  exit={{ opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isOpen ? (
+                    <X className="h-5 w-5 text-gray-600" />
+                  ) : (
+                    <Menu className="h-5 w-5 text-gray-600" />
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </motion.button>
           </div>
         </div>
       </div>
 
+      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -117,30 +176,18 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="md:hidden overflow-hidden"
           >
-            <div className="bg-white/80 backdrop-blur-md px-4 pt-2 pb-3 shadow-lg">
+            <div className="bg-white/95 backdrop-blur-md px-4 pt-2 pb-4 shadow-xl border-t border-gray-100">
               <div className="space-y-1">
-                <MobileNavButton onClick={() => {
-                  scrollToSection('features');
-                  setIsOpen(false);
-                }}>
+                <MobileNavButton onClick={() => handleMobileNavClick('features')}>
                   Features
                 </MobileNavButton>
-                <MobileNavButton onClick={() => {
-                  scrollToSection('about');
-                  setIsOpen(false);
-                }}>
+                <MobileNavButton onClick={() => handleMobileNavClick('about')}>
                   About
                 </MobileNavButton>
-                <MobileNavButton onClick={() => {
-                  scrollToSection('testimonials');
-                  setIsOpen(false);
-                }}>
+                <MobileNavButton onClick={() => handleMobileNavClick('testimonials')}>
                   Testimonials
                 </MobileNavButton>
-                <MobileNavButton onClick={() => {
-                  scrollToSection('pricing');
-                  setIsOpen(false);
-                }}>
+                <MobileNavButton onClick={() => handleMobileNavClick('pricing')}>
                   Pricing
                 </MobileNavButton>
                 
@@ -151,7 +198,7 @@ export default function Navbar() {
                       navigate('/login');
                       setIsOpen(false);
                     }}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-primary/10 text-primary font-medium hover:bg-primary/5 transition-colors"
+                    className="w-full px-4 py-3 rounded-xl bg-primary/5 text-primary font-medium transition-all active:bg-primary/10 hover:bg-primary/8"
                   >
                     Login
                   </motion.button>
@@ -162,7 +209,7 @@ export default function Navbar() {
                       navigate('/register');
                       setIsOpen(false);
                     }}
-                    className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-medium hover:opacity-90 transition-opacity shadow-lg shadow-primary/25"
+                    className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-medium transition-all active:opacity-90 shadow-lg shadow-primary/20"
                   >
                     Register
                   </motion.button>
@@ -173,56 +220,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </motion.nav>
-  );
-}
-
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      to={href}
-      className="group relative px-4 py-2 text-dark/80 hover:text-dark transition-colors"
-    >
-      <span>{children}</span>
-      <span className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-primary/0 via-primary/70 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity" />
-    </Link>
-  );
-}
-
-function NavButton({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className="group relative px-4 py-2 text-dark/80 hover:text-dark transition-colors"
-    >
-      <span className="flex items-center">
-        {children}
-        <ChevronDown className="ml-1 h-4 w-4 group-hover:rotate-180 transition-transform" />
-      </span>
-      <span className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-primary/0 via-primary/70 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity" />
-    </button>
-  );
-}
-
-function MobileNavLink({ href, onClick, children }: { href: string; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <Link
-      to={href}
-      onClick={onClick}
-      className="block px-4 py-3 rounded-lg text-dark/80 hover:text-dark hover:bg-gray-100 transition-colors"
-    >
-      {children}
-    </Link>
-  );
-}
-
-function MobileNavButton({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex w-full items-center px-4 py-3 rounded-lg text-dark/80 hover:text-dark hover:bg-gray-100 transition-colors"
-    >
-      <span>{children}</span>
-      <ChevronDown className="ml-1 h-4 w-4" />
-    </button>
   );
 }

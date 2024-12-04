@@ -103,17 +103,17 @@ export default function ModuleTest() {
     switch (question.type) {
       case 'multiple':
         return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {question.options?.map((option, index) => (
               <motion.label
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className={`group relative overflow-hidden rounded-2xl border-2 transition-all cursor-pointer
+                className={`group relative overflow-hidden rounded-xl sm:rounded-2xl border-2 transition-all cursor-pointer
                   ${answers[question.id] === option
                     ? 'border-primary bg-primary/5 shadow-lg'
-                    : 'border-gray-200 hover:border-primary/60 hover:shadow-md'
+                    : 'border-gray-200 hover:border-primary/60 hover:shadow-md active:scale-[0.98]'
                   }`}
               >
                 <input
@@ -124,7 +124,7 @@ export default function ModuleTest() {
                   onChange={(e) => handleAnswer(e.target.value)}
                   className="sr-only"
                 />
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent"
                     initial={false}
@@ -134,14 +134,14 @@ export default function ModuleTest() {
                     }}
                   />
                   <div className="relative flex items-center justify-between">
-                    <span className="text-lg font-medium text-gray-800">{option}</span>
+                    <span className="text-base sm:text-lg font-medium text-gray-800">{option}</span>
                     {answers[question.id] === option && (
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         className="flex-shrink-0 ml-2"
                       >
-                        <CheckCircle className="w-6 h-6 text-primary" />
+                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                       </motion.div>
                     )}
                   </div>
@@ -171,7 +171,7 @@ export default function ModuleTest() {
                 type="text"
                 value={answers[question.id] || ''}
                 onChange={(e) => handleAnswer(e.target.value)}
-                className="w-full px-6 py-4 text-lg rounded-2xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none bg-white/50 backdrop-blur-sm"
+                className="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg rounded-xl sm:rounded-2xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none bg-white/50 backdrop-blur-sm"
                 placeholder="Type your answer..."
               />
               <motion.div
@@ -206,31 +206,31 @@ export default function ModuleTest() {
 
   return (
     <DashboardLayout role="student">
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-4 md:p-8">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 md:p-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-8 relative overflow-hidden"
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 relative overflow-hidden"
           >
             {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/5 to-transparent rounded-full transform translate-x-32 -translate-y-32" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-gray-100 to-transparent rounded-full transform -translate-x-32 translate-y-32" />
+            <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-gradient-to-br from-primary/5 to-transparent rounded-full transform translate-x-24 sm:translate-x-32 -translate-y-24 sm:-translate-y-32" />
+            <div className="absolute bottom-0 left-0 w-48 sm:w-64 h-48 sm:h-64 bg-gradient-to-tr from-gray-100 to-transparent rounded-full transform -translate-x-24 sm:-translate-x-32 translate-y-24 sm:translate-y-32" />
 
             <div className="relative">
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8">
                 <div className="mb-4 md:mb-0">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Brain className="w-6 h-6 text-primary" />
-                    <h1 className="text-3xl font-bold text-gray-800">{testData.title}</h1>
+                  <div className="flex items-center space-x-2 mb-1 sm:mb-2">
+                    <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">{testData.title}</h1>
                   </div>
-                  <p className="text-gray-600">{testData.description}</p>
+                  <p className="text-sm sm:text-base text-gray-600">{testData.description}</p>
                 </div>
-                <div className="flex items-center space-x-2 bg-primary/10 px-4 py-2 rounded-xl">
-                  <Target className="w-5 h-5 text-primary" />
+                <div className="flex items-center space-x-2 bg-primary/10 px-3 sm:px-4 py-2 rounded-xl">
+                  <Target className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                   <div>
-                    <p className="text-sm text-gray-600">Points</p>
-                    <p className="text-2xl font-bold text-primary">{points}</p>
+                    <p className="text-xs sm:text-sm text-gray-600">Points</p>
+                    <p className="text-xl sm:text-2xl font-bold text-primary">{points}</p>
                   </div>
                 </div>
               </div>
@@ -256,14 +256,14 @@ export default function ModuleTest() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className="space-y-8"
+                  className="space-y-4 sm:space-y-6"
                 >
-                  <div className="space-y-6">
-                    <div className="flex items-start space-x-3">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary font-medium">{currentQuestion + 1}</span>
+                  <div className="space-y-4 sm:space-y-6">
+                    <div className="flex items-start space-x-2 sm:space-x-3">
+                      <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span className="text-sm sm:text-base text-primary font-medium">{currentQuestion + 1}</span>
                       </div>
-                      <h2 className="text-xl font-medium text-gray-800 leading-relaxed">
+                      <h2 className="text-lg sm:text-xl font-medium text-gray-800 leading-relaxed">
                         {question.question}
                       </h2>
                     </div>
@@ -321,22 +321,22 @@ export default function ModuleTest() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="flex justify-end"
+                      className="flex justify-end mt-6"
                     >
                       <button
                         onClick={handleNext}
-                        className="group relative inline-flex items-center px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                        className="group relative inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-primary hover:bg-primary-dark text-white text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 w-full sm:w-auto justify-center"
                       >
                         <span className="relative flex items-center">
                           {currentQuestion < testData.questions.length - 1 ? (
                             <>
                               Next Question
-                              <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
+                              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform" />
                             </>
                           ) : (
                             <>
                               Complete Test
-                              <Sparkles className="ml-2 h-5 w-5 animate-pulse" />
+                              <Sparkles className="ml-2 h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
                             </>
                           )}
                         </span>

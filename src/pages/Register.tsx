@@ -73,9 +73,9 @@ export default function Register() {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Email Address
               </label>
               <input
@@ -84,13 +84,13 @@ export default function Register() {
                 required
                 value={formData.email}
                 onChange={(e) => updateFormData('email', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="your@email.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Password
               </label>
               <input
@@ -99,10 +99,10 @@ export default function Register() {
                 required
                 value={formData.password}
                 onChange={(e) => updateFormData('password', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="••••••••"
               />
-              <div className="mt-2 h-1 bg-gray-100 rounded-full overflow-hidden">
+              <div className="mt-2 h-1 bg-slate-100 rounded-full overflow-hidden">
                 <div
                   className={`h-full transition-all duration-300 ${
                     formData.password.length > 8
@@ -116,17 +116,17 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Select Role
               </label>
-              <div className="flex p-1 bg-gray-100 rounded-lg">
+              <div className="flex p-1 bg-slate-100 rounded-lg">
                 <button
                   type="button"
                   onClick={() => updateFormData('role', 'student')}
-                  className={`flex-1 py-2 rounded-md text-sm font-medium transition-all ${
+                  className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${
                     formData.role === 'student'
-                      ? 'bg-white shadow-sm text-primary'
-                      : 'text-light hover:text-dark'
+                      ? 'bg-white shadow-sm text-blue-600'
+                      : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
                   Student
@@ -134,10 +134,10 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={() => updateFormData('role', 'hr')}
-                  className={`flex-1 py-2 rounded-md text-sm font-medium transition-all ${
+                  className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${
                     formData.role === 'hr'
-                      ? 'bg-white shadow-sm text-primary'
-                      : 'text-light hover:text-dark'
+                      ? 'bg-white shadow-sm text-blue-600'
+                      : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
                   HR Manager
@@ -149,9 +149,9 @@ export default function Register() {
 
       case 2:
         return formData.role === 'hr' ? (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <label htmlFor="companyName" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="companyName" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Company Name
               </label>
               <input
@@ -160,13 +160,13 @@ export default function Register() {
                 required
                 value={formData.companyName || ''}
                 onChange={(e) => updateFormData('companyName', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="Company Name"
               />
             </div>
 
             <div>
-              <label htmlFor="department" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="department" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Department
               </label>
               <input
@@ -175,13 +175,13 @@ export default function Register() {
                 required
                 value={formData.department || ''}
                 onChange={(e) => updateFormData('department', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="e.g., Human Resources"
               />
             </div>
 
             <div>
-              <label htmlFor="employeeId" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="employeeId" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Employee ID
               </label>
               <input
@@ -190,13 +190,13 @@ export default function Register() {
                 required
                 value={formData.employeeId || ''}
                 onChange={(e) => updateFormData('employeeId', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="EMP-123"
               />
             </div>
 
             <div>
-              <label htmlFor="contactNumber" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="contactNumber" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Contact Number
               </label>
               <input
@@ -205,15 +205,15 @@ export default function Register() {
                 required
                 value={formData.contactNumber || ''}
                 onChange={(e) => updateFormData('contactNumber', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="fullName" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Full Name
               </label>
               <input
@@ -222,13 +222,13 @@ export default function Register() {
                 required
                 value={formData.fullName || ''}
                 onChange={(e) => updateFormData('fullName', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label htmlFor="educationLevel" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="educationLevel" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Education Level
               </label>
               <select
@@ -236,7 +236,7 @@ export default function Register() {
                 required
                 value={formData.educationLevel || ''}
                 onChange={(e) => updateFormData('educationLevel', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
               >
                 <option value="">Select Education Level</option>
                 <option value="high_school">High School</option>
@@ -247,7 +247,7 @@ export default function Register() {
             </div>
 
             <div>
-              <label htmlFor="studyField" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="studyField" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Field of Study
               </label>
               <input
@@ -256,13 +256,13 @@ export default function Register() {
                 required
                 value={formData.studyField || ''}
                 onChange={(e) => updateFormData('studyField', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
                 placeholder="e.g., Computer Science"
               />
             </div>
 
             <div>
-              <label htmlFor="dateOfBirth" className="block text-sm font-medium text-dark mb-2">
+              <label htmlFor="dateOfBirth" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Date of Birth
               </label>
               <input
@@ -271,7 +271,7 @@ export default function Register() {
                 required
                 value={formData.dateOfBirth || ''}
                 onChange={(e) => updateFormData('dateOfBirth', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
               />
             </div>
           </div>
@@ -279,18 +279,18 @@ export default function Register() {
 
       case 3:
         return (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <label className="block text-sm font-medium text-dark mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Profile Picture
               </label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-lg hover:border-primary/60 transition-colors">
-                <div className="space-y-1 text-center">
-                  <Upload className="mx-auto h-12 w-12 text-light" />
-                  <div className="flex text-sm text-light">
+              <div className="mt-1 flex justify-center px-4 sm:px-6 pt-4 sm:pt-5 pb-4 sm:pb-6 border-2 border-slate-200 border-dashed rounded-lg hover:border-blue-300 transition-colors">
+                <div className="space-y-2 text-center">
+                  <Upload className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-slate-400" />
+                  <div className="flex text-sm text-slate-500">
                     <label
                       htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/80"
+                      className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500"
                     >
                       <span>Upload a file</span>
                       <input
@@ -306,16 +306,16 @@ export default function Register() {
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
-                  <p className="text-xs text-light">PNG, JPG, GIF up to 10MB</p>
+                  <p className="text-xs text-slate-500">PNG, JPG, GIF up to 10MB</p>
                 </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Notification Preferences
               </label>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -326,9 +326,9 @@ export default function Register() {
                         email: e.target.checked,
                       })
                     }
-                    className="rounded border-gray-300 text-primary focus:ring-primary/20"
+                    className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
                   />
-                  <span className="ml-2 text-sm text-light">Email notifications</span>
+                  <span className="ml-2 text-sm text-slate-600">Email notifications</span>
                 </label>
                 <label className="flex items-center">
                   <input
@@ -340,9 +340,9 @@ export default function Register() {
                         push: e.target.checked,
                       })
                     }
-                    className="rounded border-gray-300 text-primary focus:ring-primary/20"
+                    className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
                   />
-                  <span className="ml-2 text-sm text-light">Push notifications</span>
+                  <span className="ml-2 text-sm text-slate-600">Push notifications</span>
                 </label>
               </div>
             </div>
@@ -354,15 +354,15 @@ export default function Register() {
                   required
                   checked={formData.termsAccepted}
                   onChange={(e) => updateFormData('termsAccepted', e.target.checked)}
-                  className="rounded border-gray-300 text-primary focus:ring-primary/20"
+                  className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
                 />
-                <span className="ml-2 text-sm text-light">
+                <span className="ml-2 text-sm text-slate-600">
                   I agree to the{' '}
-                  <a href="#" className="text-primary hover:text-primary/80">
+                  <a href="#" className="text-blue-600 hover:text-blue-500">
                     Terms and Conditions
                   </a>{' '}
                   and{' '}
-                  <a href="#" className="text-primary hover:text-primary/80">
+                  <a href="#" className="text-blue-600 hover:text-blue-500">
                     Privacy Policy
                   </a>
                 </span>
@@ -377,112 +377,137 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left side - Progress */}
-      <div className="hidden lg:flex lg:w-1/3 bg-primary/5 flex-col justify-center p-12">
-        <div className="max-w-sm">
-          <h2 className="text-2xl font-bold text-dark mb-8">Registration Progress</h2>
-          <div className="space-y-4">
-            {[
-              { step: 1, title: 'Basic Information' },
-              { step: 2, title: 'Role Details' },
-              { step: 3, title: 'Preferences' },
-            ].map(({ step, title }) => (
-              <div
-                key={step}
-                className={`flex items-center ${step < currentStep ? 'text-primary' : ''}`}
-              >
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    step === currentStep
-                      ? 'bg-primary text-white'
-                      : step < currentStep
-                      ? 'bg-primary/20 text-primary'
-                      : 'bg-gray-100 text-light'
-                  }`}
-                >
-                  {step < currentStep ? (
-                    <Check className="w-5 h-5" />
-                  ) : (
-                    <span>{step}</span>
-                  )}
-                </div>
-                <div className="ml-4">
-                  <p
-                    className={`font-medium ${
-                      step === currentStep
-                        ? 'text-primary'
-                        : step < currentStep
-                        ? 'text-dark'
-                        : 'text-light'
-                    }`}
-                  >
-                    {title}
-                  </p>
-                </div>
-              </div>
-            ))}
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      {/* Progress Steps - Mobile */}
+      <div className="lg:hidden px-4 pt-6">
+        <div className="flex items-center justify-between mb-6">
+          <Link to="/login" className="flex items-center text-slate-600 hover:text-blue-600 transition-colors">
+            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+            <span className="text-sm sm:text-base">Back to Login</span>
+          </Link>
+          <div className="text-sm sm:text-base font-medium text-slate-600">
+            Step {currentStep} of 3
           </div>
+        </div>
+        <div className="flex space-x-2 mb-8">
+          {[1, 2, 3].map((step) => (
+            <div
+              key={step}
+              className="flex-1 h-1 rounded-full overflow-hidden bg-slate-200"
+            >
+              <div
+                className={`h-full transition-all duration-300 ${
+                  step === currentStep
+                    ? 'bg-blue-600 w-1/2'
+                    : step < currentStep
+                    ? 'bg-blue-600 w-full'
+                    : 'w-0'
+                }`}
+              />
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Right side - Form */}
-      <div className="w-full lg:w-2/3 flex items-center justify-center p-8">
-        <div className="max-w-md w-full">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-dark">Create Account</h2>
-            <p className="text-light mt-3">
-              Join EduMaster Pro to start your learning journey
-            </p>
+      <div className="flex">
+        {/* Left side - Progress (Desktop) */}
+        <div className="hidden lg:flex lg:w-1/3 bg-gradient-to-b from-slate-100 to-white flex-col justify-center p-8 sm:p-12">
+          <div className="max-w-sm">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 sm:mb-8">Registration Progress</h2>
+            <div className="space-y-4">
+              {[
+                { step: 1, title: 'Basic Information' },
+                { step: 2, title: 'Role Details' },
+                { step: 3, title: 'Preferences' },
+              ].map(({ step, title }) => (
+                <div
+                  key={step}
+                  className={`flex items-center ${step < currentStep ? 'text-blue-600' : ''}`}
+                >
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      step === currentStep
+                        ? 'bg-blue-600 text-white'
+                        : step < currentStep
+                        ? 'bg-blue-100 text-blue-600'
+                        : 'bg-slate-100 text-slate-400'
+                    }`}
+                  >
+                    {step < currentStep ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <span className="text-sm">{step}</span>
+                    )}
+                  </div>
+                  <div className="ml-3">
+                    <p className={`text-sm font-medium ${
+                      step === currentStep ? 'text-slate-900' : 'text-slate-600'
+                    }`}>
+                      {title}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {renderStepContent()}
+        {/* Right side - Form */}
+        <div className="flex-1 p-4 sm:p-8 lg:p-12">
+          <div className="max-w-xl mx-auto">
+            <div className="mb-6 sm:mb-8">
+              <h1 className="text-xl sm:text-3xl font-bold text-slate-900 mb-2">
+                {currentStep === 1 && 'Create your account'}
+                {currentStep === 2 && (formData.role === 'hr' ? 'HR Details' : 'Student Details')}
+                {currentStep === 3 && 'Final Steps'}
+              </h1>
+              <p className="text-sm sm:text-base text-slate-600">
+                {currentStep === 1 && 'Start by entering your basic information'}
+                {currentStep === 2 && 'Tell us more about yourself'}
+                {currentStep === 3 && 'Set up your preferences and complete registration'}
+              </p>
+            </div>
 
-            <div className="flex items-center justify-between pt-4">
-              {currentStep > 1 ? (
-                <button
-                  type="button"
-                  onClick={handlePrevious}
-                  className="flex items-center text-light hover:text-dark transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back
-                </button>
-              ) : (
-                <Link
-                  to="/login"
-                  className="flex items-center text-light hover:text-dark transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Login
-                </Link>
-              )}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {renderStepContent()}
 
-              {currentStep < 3 ? (
+              <div className="flex items-center justify-between pt-4 sm:pt-6">
+                {currentStep > 1 ? (
+                  <button
+                    type="button"
+                    onClick={handlePrevious}
+                    className="flex items-center text-slate-600 hover:text-blue-600 transition-colors text-sm sm:text-base"
+                  >
+                    <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                    Previous
+                  </button>
+                ) : (
+                  <div />
+                )}
+
                 <button
-                  type="button"
-                  onClick={handleNext}
-                  className="btn-primary"
-                >
-                  Next Step
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isLoading || !formData.termsAccepted}
-                  className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  type={currentStep === 3 ? 'submit' : 'button'}
+                  onClick={currentStep < 3 ? handleNext : undefined}
+                  disabled={isLoading}
+                  className="flex items-center justify-center px-6 py-2.5 sm:py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                 >
                   {isLoading ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
+                    <>
+                      <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin mr-2" />
+                      Processing...
+                    </>
+                  ) : currentStep === 3 ? (
                     'Complete Registration'
+                  ) : (
+                    <>
+                      Next
+                      <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 ml-2" />
+                    </>
                   )}
                 </button>
-              )}
-            </div>
-          </form>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

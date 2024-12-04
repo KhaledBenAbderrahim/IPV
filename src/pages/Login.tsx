@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Loader2, GraduationCap, Users, ArrowLeft, Home, LightbulbIcon } from 'lucide-react';
+import { Eye, EyeOff, Loader2, GraduationCap, Users, ArrowLeft, Home, LightbulbIcon, ArrowRight } from 'lucide-react';
 import { useRole } from '../contexts/RoleContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -50,38 +50,38 @@ export default function Login() {
 
   if (!selectedRole) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center p-4 sm:p-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-md w-full"
+          className="w-full max-w-md mx-auto"
         >
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-6 sm:mb-8">
             <Link 
               to="/" 
-              className="flex items-center text-gray-600 hover:text-primary transition-colors group"
+              className="flex items-center text-slate-600 hover:text-blue-600 transition-colors group"
             >
               <motion.div
                 whileHover={{ x: -4 }}
                 className="flex items-center"
               >
-                <Home className="h-5 w-5 mr-2 group-hover:text-primary" />
-                Back to Home
+                <Home className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover:text-blue-600" />
+                <span className="text-sm sm:text-base">Back to Home</span>
               </motion.div>
             </Link>
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1, ease: "easeInOut" }}
             >
-              <GraduationCap className="h-12 w-12 text-primary" />
+              <GraduationCap className="h-8 w-8 sm:h-12 sm:w-12 text-blue-600" />
             </motion.div>
           </div>
 
-          <div className="text-center mb-8">
+          <div className="text-center mb-6 sm:mb-8">
             <motion.h2 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              className="text-2xl sm:text-4xl font-bold text-slate-900"
             >
               Welcome Back!
             </motion.h2>
@@ -89,63 +89,45 @@ export default function Login() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="mt-2 text-gray-600"
+              className="mt-2 text-sm sm:text-base text-slate-600"
             >
               Choose how you want to login
             </motion.p>
           </div>
 
-          <div className="space-y-4">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleRoleSelect('student')}
-              className="w-full bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all text-left group relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex items-center">
-                <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <GraduationCap className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">Student</h3>
-                  <p className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">Access your learning dashboard</p>
-                </div>
-              </div>
-            </motion.button>
-
+          <div className="space-y-3 sm:space-y-4">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => handleRoleSelect('hr')}
-              className="w-full bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all text-left group relative overflow-hidden"
+              className="w-full flex items-center justify-between p-4 sm:p-5 rounded-xl bg-white border border-slate-200 hover:border-blue-200 shadow-sm hover:shadow transition-all group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex items-center">
-                <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <Users className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">HR Manager</h3>
-                  <p className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">Manage your organization's learning</p>
+              <div className="flex items-center">
+                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 mr-3" />
+                <div className="text-left">
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-900">HR Login</h3>
+                  <p className="text-xs sm:text-sm text-slate-500">For company administrators</p>
                 </div>
               </div>
+              <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => handleRoleSelect('student')}
+              className="w-full flex items-center justify-between p-4 sm:p-5 rounded-xl bg-white border border-slate-200 hover:border-blue-200 shadow-sm hover:shadow transition-all group"
+            >
+              <div className="flex items-center">
+                <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 mr-3" />
+                <div className="text-left">
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-900">Student Login</h3>
+                  <p className="text-xs sm:text-sm text-slate-500">For enrolled students</p>
+                </div>
+              </div>
+              <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
             </motion.button>
           </div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="mt-8 text-center"
-          >
-            <p className="text-gray-600">
-              Don't have an account?{' '}
-              <Link to="/register" className="text-primary hover:text-primary/80 font-medium">
-                Register now
-              </Link>
-            </p>
-          </motion.div>
         </motion.div>
       </div>
     );
@@ -154,177 +136,141 @@ export default function Login() {
   const currentCredentials = selectedRole === 'hr' ? demoCredentials.hr : demoCredentials.student;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex">
-      <div className="hidden lg:flex lg:w-1/2 bg-primary/5 items-center justify-center p-12 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
-        <motion.img
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          src={selectedRole === 'hr' 
-            ? "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80"
-            : "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80"
-          }
-          alt="Education"
-          className="relative rounded-2xl shadow-2xl max-w-2xl w-full object-cover"
-        />
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center p-4 sm:p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md mx-auto"
+      >
+        <div className="flex justify-between items-center mb-6 sm:mb-8">
+          <motion.button
+            whileHover={{ x: -4 }}
+            onClick={() => setSelectedRole(null)}
+            className="flex items-center text-slate-600 hover:text-blue-600 transition-colors group"
+          >
+            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+            <span className="text-sm sm:text-base">Back to Selection</span>
+          </motion.button>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            {selectedRole === 'hr' ? (
+              <Users className="h-8 w-8 sm:h-12 sm:w-12 text-blue-600" />
+            ) : (
+              <GraduationCap className="h-8 w-8 sm:h-12 sm:w-12 text-blue-600" />
+            )}
+          </motion.div>
+        </div>
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="max-w-md w-full"
+        <div className="text-center mb-6 sm:mb-8">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-2xl sm:text-4xl font-bold text-slate-900"
+          >
+            {selectedRole === 'hr' ? 'HR Login' : 'Student Login'}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mt-2 text-sm sm:text-base text-slate-600"
+          >
+            Enter your credentials to continue
+          </motion.p>
+        </div>
+
+        <motion.form
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          onSubmit={handleSubmit}
+          className="space-y-4 sm:space-y-5"
         >
-          <div className="flex justify-between items-center mb-8">
-            <motion.button
-              whileHover={{ x: -4 }}
-              onClick={() => setSelectedRole(null)}
-              className="flex items-center text-gray-600 hover:text-primary transition-colors group"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2 group-hover:text-primary" />
-              Back to role selection
-            </motion.button>
-            <Link 
-              to="/" 
-              className="flex items-center text-gray-600 hover:text-primary transition-colors group"
-            >
-              <motion.div
-                whileHover={{ x: -4 }}
-                className="flex items-center"
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1.5">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors outline-none text-sm sm:text-base"
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
               >
-                <Home className="h-5 w-5 mr-2 group-hover:text-primary" />
-                Home
-              </motion.div>
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" />
+                ) : (
+                  <Eye className="h-4 w-4 sm:h-5 sm:w-5" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.remember}
+                onChange={(e) => setFormData({ ...formData, remember: e.target.checked })}
+                className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+              />
+              <span className="text-sm text-slate-600">Remember me</span>
+            </label>
+            <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
+              Forgot Password?
             </Link>
           </div>
 
-          <div className="text-center mb-8">
-            <motion.h2 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-            >
-              Welcome Back!
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-gray-600 mt-2"
-            >
-              Sign in as {selectedRole === 'hr' ? 'HR Manager' : 'Student'}
-            </motion.p>
-          </div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-6 p-4 bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl border border-primary/20"
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex items-center justify-center px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
           >
-            <div className="flex items-start">
-              <LightbulbIcon className="h-5 w-5 text-primary mt-0.5" />
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-900">Demo Credentials</p>
-                <p className="text-sm text-gray-600 mt-1">
-                  Email: <span className="text-primary">{currentCredentials.email}</span><br />
-                  Password: <span className="text-primary">{currentCredentials.password}</span>
-                </p>
-              </div>
-            </div>
-          </motion.div>
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin mr-2" />
+                Logging in...
+              </>
+            ) : (
+              'Log In'
+            )}
+          </motion.button>
 
-          <motion.form 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            onSubmit={handleSubmit} 
-            className="space-y-6"
-          >
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
-                Email Address
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none bg-white/50 backdrop-blur-sm"
-                placeholder="Enter your email"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-900 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none bg-white/50 backdrop-blur-sm"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.remember}
-                  onChange={(e) => setFormData({ ...formData, remember: e.target.checked })}
-                  className="rounded border-gray-300 text-primary focus:ring-primary"
-                />
-                <span className="ml-2 text-sm text-gray-600">Remember me</span>
-              </label>
-              <Link to="/forgot-password" className="text-sm text-primary hover:text-primary/80">
-                Forgot password?
-              </Link>
-            </div>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-primary to-accent text-white py-3 rounded-xl font-medium hover:opacity-90 transition-opacity relative overflow-hidden disabled:opacity-70"
-            >
-              {isLoading ? (
-                <AnimatePresence>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute inset-0 flex items-center justify-center bg-inherit"
-                  >
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  </motion.div>
-                </AnimatePresence>
-              ) : (
-                'Sign In'
-              )}
-            </motion.button>
-          </motion.form>
-        </motion.div>
-      </div>
+          <p className="text-center text-sm text-slate-600">
+            Don't have an account?{' '}
+            <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+              Sign up
+            </Link>
+          </p>
+        </motion.form>
+      </motion.div>
     </div>
   );
 }

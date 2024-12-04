@@ -82,11 +82,11 @@ export default function Testimonials() {
   const testimonial = testimonials[currentIndex];
 
   return (
-    <section id="testimonials" className="relative py-24 mb-24 overflow-hidden bg-gradient-to-b from-blue-50 via-white to-white">
+    <section id="testimonials" className="py-24 bg-background relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/5 opacity-70 blur-[100px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_14px] sm:bg-[size:24px_24px]" />
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[200px] w-[200px] sm:h-[310px] sm:w-[310px] rounded-full bg-primary/5 opacity-70 blur-[100px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -95,27 +95,27 @@ export default function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-16"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-8"
+            className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-4 sm:mb-8"
           >
-            <Star className="h-4 w-4 mr-2 fill-primary" />
-            <span className="text-sm font-medium">Trusted by Thousands</span>
+            <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 fill-primary" />
+            <span className="text-xs sm:text-sm font-medium">Trusted by Thousands</span>
           </motion.div>
           
-          <h2 className="text-4xl font-bold text-gray-900 sm:text-5xl lg:text-6xl">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 px-4">
             What Our Users
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Say About Us</span>
           </h2>
         </motion.div>
 
-        <div className="relative px-4 sm:px-6 lg:px-8">
-          <div className="relative max-w-4xl mx-auto" style={{ height: '600px' }}>
+        <div className="relative px-2 sm:px-6 lg:px-8">
+          <div className="relative max-w-4xl mx-auto" style={{ height: 'auto', minHeight: '450px', sm: { minHeight: '600px' } }}>
             <div className="absolute inset-0">
               <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
@@ -130,24 +130,24 @@ export default function Testimonials() {
                     opacity: { duration: 0.2 },
                     scale: { duration: 0.2 }
                   }}
-                  className="absolute inset-0 flex items-center justify-center"
+                  className="absolute inset-0 flex items-center justify-center px-2"
                   onAnimationStart={() => setIsAnimating(true)}
                   onAnimationComplete={() => setIsAnimating(false)}
                 >
                   <div className="w-full">
-                    <div className="relative bg-white rounded-2xl shadow-lg p-8 sm:p-12 overflow-hidden">
+                    <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8 lg:p-12 overflow-hidden">
                       {/* Background gradient */}
                       <div className="absolute inset-0 bg-gradient-to-br opacity-5"
                            style={{ background: `linear-gradient(to bottom right, var(--${testimonial.bgColor}))` }} />
                       
                       {/* Quote decoration */}
-                      <div className="absolute -right-6 -top-6 text-gray-100">
-                        <Quote className="w-24 h-24 transform rotate-12" />
+                      <div className="absolute -right-4 -top-4 sm:-right-6 sm:-top-6 text-gray-100">
+                        <Quote className="w-16 h-16 sm:w-24 sm:h-24 transform rotate-12" />
                       </div>
 
                       {/* Content */}
                       <div className="relative">
-                        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                        <div className="flex flex-col items-center gap-4 sm:gap-6">
                           {/* Avatar */}
                           <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
@@ -155,35 +155,42 @@ export default function Testimonials() {
                             transition={{ delay: 0.1 }}
                             className="relative flex-shrink-0"
                           >
-                            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden ring-4 ring-white shadow-lg">
+                            <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden ring-4 ring-white shadow-lg">
                               <img
                                 src={testimonial.image}
                                 alt={testimonial.name}
                                 className="w-full h-full object-cover"
                               />
                             </div>
-                            <div className="absolute -bottom-2 -right-2 bg-primary text-white p-1.5 rounded-full shadow-lg">
-                              <CheckCircle2 className="w-4 h-4" />
+                            <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 bg-primary text-white rounded-full p-1 sm:p-1.5">
+                              <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4" />
                             </div>
                           </motion.div>
 
-                          {/* Text Content */}
-                          <div className="flex-1 text-center sm:text-left">
-                            <div className="flex items-center justify-center sm:justify-start mb-2">
-                              {[...Array(testimonial.rating)].map((_, i) => (
-                                <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                              ))}
-                            </div>
-                            <blockquote className="text-xl sm:text-2xl font-medium text-gray-900 leading-relaxed mb-6">
+                          <div className="text-center sm:text-left">
+                            <motion.blockquote
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.2 }}
+                              className="text-sm sm:text-base lg:text-lg text-gray-700 mb-4"
+                            >
                               "{testimonial.content}"
-                            </blockquote>
-                            <div className="space-y-2">
-                              <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                              <div className="text-gray-600">{testimonial.role} at {testimonial.company}</div>
-                              <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                            </motion.blockquote>
+
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 0.3 }}
+                              className="space-y-1"
+                            >
+                              <div className="font-semibold text-gray-900 text-sm sm:text-base">{testimonial.name}</div>
+                              <div className="text-xs sm:text-sm text-gray-500">
+                                {testimonial.role} • {testimonial.company}
+                              </div>
+                              <div className="text-xs sm:text-sm font-medium text-primary">
                                 {testimonial.highlight}
                               </div>
-                            </div>
+                            </motion.div>
                           </div>
                         </div>
                       </div>
@@ -192,40 +199,55 @@ export default function Testimonials() {
                 </motion.div>
               </AnimatePresence>
             </div>
+          </div>
 
-            {/* Navigation Buttons */}
-            <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between pointer-events-none">
-              <button
+          {/* Navigation Buttons and Indicators */}
+          <div className="relative mt-6">
+            {/* Pagination Dots */}
+            <div className="flex justify-center gap-2 mb-4">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setPage([index, index > currentIndex ? 1 : -1])}
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                    index === currentIndex
+                      ? 'bg-primary w-6'
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  disabled={isAnimating}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="absolute top-1/2 -translate-y-8 left-0 right-0 flex justify-between items-center px-2 sm:px-4">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => paginate(-1)}
-                className="pointer-events-auto transform -translate-x-4 sm:-translate-x-8 p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-lg text-gray-800 hover:text-primary hover:scale-110 transition-all duration-200"
-                disabled={isAnimating}
+                className="p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-sm shadow-lg text-gray-800 hover:text-primary transition-colors"
+                aria-label="Previous testimonial"
               >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
+                <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => paginate(1)}
-                className="pointer-events-auto transform translate-x-4 sm:translate-x-8 p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-lg text-gray-800 hover:text-primary hover:scale-110 transition-all duration-200"
-                disabled={isAnimating}
+                className="p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-sm shadow-lg text-gray-800 hover:text-primary transition-colors"
+                aria-label="Next testimonial"
               >
-                <ChevronRight className="w-6 h-6" />
-              </button>
+                <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+              </motion.button>
             </div>
           </div>
 
-          {/* Pagination Dots */}
-          <div className="flex justify-center gap-2 pb-8">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setPage([index, index > currentIndex ? 1 : -1])}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                  index === currentIndex
-                    ? 'bg-primary w-8'
-                    : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                disabled={isAnimating}
-              />
-            ))}
+          {/* Current/Total Indicator */}
+          <div className="text-center mt-4">
+            <span className="text-sm text-gray-500">
+              {currentIndex + 1} of {testimonials.length}
+            </span>
           </div>
         </div>
       </div>
