@@ -76,48 +76,48 @@ export default function Analytics() {
 
   return (
     <DashboardLayout role="hr">
-      <div className="min-h-screen bg-gray-50 p-6 md:p-8">
+      <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header with Filters */}
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8"
+            className="flex flex-col gap-4 mb-6 sm:mb-8"
           >
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Learning Analytics</h1>
-              <p className="text-gray-600 mt-1">Track and analyze student performance metrics</p>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Learning Analytics</h1>
+              <p className="text-sm sm:text-base text-gray-600 mt-1">Track and analyze student performance metrics</p>
             </div>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <motion.div 
                 whileHover={{ scale: 1.02 }}
-                className="relative"
+                className="relative flex-1 sm:flex-none"
               >
                 <select
                   value={dateRange}
                   onChange={(e) => setDateRange(e.target.value)}
-                  className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2 pr-10 text-sm font-medium text-gray-700 hover:border-primary transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full sm:w-auto appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-2 pr-10 text-sm font-medium text-gray-700 hover:border-primary transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
                 >
                   <option value="last7Days">Last 7 Days</option>
                   <option value="last30Days">Last 30 Days</option>
                   <option value="last3Months">Last 3 Months</option>
                   <option value="lastYear">Last Year</option>
                 </select>
-                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400 pointer-events-none" />
               </motion.div>
               <motion.button 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="btn-primary bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300"
+                className="w-full sm:w-auto btn-primary bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300 py-2.5 sm:py-2 px-4 rounded-lg flex items-center justify-center"
               >
-                <Download className="h-5 w-5 mr-2" />
+                <Download className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Export Report
               </motion.button>
             </div>
           </motion.div>
 
           {/* Key Performance Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <AnimatePresence>
               {performanceMetrics.map((metric, index) => {
                 const Icon = metric.icon;
@@ -129,16 +129,16 @@ export default function Analytics() {
                     animate="visible"
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ scale: 1.02, translateY: -5 }}
-                    className="bg-white rounded-xl shadow-sm hover:shadow-lg p-6 transition-all duration-300 relative overflow-hidden group"
+                    className="bg-white rounded-xl shadow-sm hover:shadow-lg p-4 sm:p-6 transition-all duration-300 relative overflow-hidden group"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className={`p-3 rounded-xl ${metric.bgColor} group-hover:scale-110 transition-transform duration-300`}>
-                          <Icon className={`h-6 w-6 ${metric.color}`} />
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <div className={`p-2 sm:p-3 rounded-xl ${metric.bgColor} group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${metric.color}`} />
                         </div>
                         <motion.span 
-                          className={`text-sm font-medium ${
+                          className={`text-xs sm:text-sm font-medium ${
                             metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
                           } px-2 py-1 rounded-full bg-opacity-10 ${
                             metric.trend === 'up' ? 'bg-green-50' : 'bg-red-50'
@@ -147,9 +147,9 @@ export default function Analytics() {
                           {metric.change}
                         </motion.span>
                       </div>
-                      <h3 className="text-gray-600 text-sm font-medium">{metric.title}</h3>
-                      <p className="text-2xl font-bold text-gray-900 mt-1">{metric.value}</p>
-                      <p className="text-sm text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 className="text-gray-600 text-xs sm:text-sm font-medium">{metric.title}</h3>
+                      <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">{metric.value}</p>
+                      <p className="text-xs sm:text-sm text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {metric.description}
                       </p>
                     </div>
@@ -159,22 +159,22 @@ export default function Analytics() {
             </AnimatePresence>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {/* Student Engagement Chart */}
             <motion.div
               variants={chartContainerVariants}
               initial="hidden"
               animate="visible"
-              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-6 transition-all duration-300"
+              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-4 sm:p-6 transition-all duration-300"
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 mb-4 sm:mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">Student Engagement</h2>
-                  <p className="text-sm text-gray-500 mt-1">Daily active participation trends</p>
+                  <h2 className="text-base sm:text-lg font-semibold text-gray-900">Student Engagement</h2>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1">Daily active participation trends</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">vs previous period</span>
-                  <span className="text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">+12.5%</span>
+                  <span className="text-xs sm:text-sm text-gray-500">vs previous period</span>
+                  <span className="text-xs sm:text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">+12.5%</span>
                 </div>
               </div>
               {!isLoading && <EngagementChart />}
@@ -190,16 +190,16 @@ export default function Analytics() {
               variants={chartContainerVariants}
               initial="hidden"
               animate="visible"
-              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-6 transition-all duration-300"
+              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-4 sm:p-6 transition-all duration-300"
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 mb-4 sm:mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">Score Distribution</h2>
-                  <p className="text-sm text-gray-500 mt-1">Performance across all assessments</p>
+                  <h2 className="text-base sm:text-lg font-semibold text-gray-900">Score Distribution</h2>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1">Performance analysis across tests</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Average Score</span>
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">92.3%</span>
+                  <span className="text-xs sm:text-sm text-gray-500">Average Score</span>
+                  <span className="text-xs sm:text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">92.3%</span>
                 </div>
               </div>
               {!isLoading && <ScoreDistributionChart />}
@@ -215,16 +215,16 @@ export default function Analytics() {
               variants={chartContainerVariants}
               initial="hidden"
               animate="visible"
-              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-6 transition-all duration-300"
+              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-4 sm:p-6 transition-all duration-300"
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 mb-4 sm:mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">Course Completion Rate</h2>
-                  <p className="text-sm text-gray-500 mt-1">Progress tracking across courses</p>
+                  <h2 className="text-base sm:text-lg font-semibold text-gray-900">Course Completion Rate</h2>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1">Progress tracking across courses</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Total Courses</span>
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">24</span>
+                  <span className="text-xs sm:text-sm text-gray-500">Total Courses</span>
+                  <span className="text-xs sm:text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">24</span>
                 </div>
               </div>
               {!isLoading && <CompletionRateChart />}
@@ -240,16 +240,16 @@ export default function Analytics() {
               variants={chartContainerVariants}
               initial="hidden"
               animate="visible"
-              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-6 transition-all duration-300"
+              className="bg-white rounded-xl shadow-sm hover:shadow-lg p-4 sm:p-6 transition-all duration-300"
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 mb-4 sm:mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">Skill Progress</h2>
-                  <p className="text-sm text-gray-500 mt-1">Competency development tracking</p>
+                  <h2 className="text-base sm:text-lg font-semibold text-gray-900">Skill Progress</h2>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1">Competency development tracking</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Overall Progress</span>
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">83.3%</span>
+                  <span className="text-xs sm:text-sm text-gray-500">Overall Progress</span>
+                  <span className="text-xs sm:text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">83.3%</span>
                 </div>
               </div>
               {!isLoading && <SkillProgressChart />}

@@ -116,19 +116,19 @@ export default function Students() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900">Students</h1>
-              <p className="text-gray-600 mt-1">Manage and monitor student progress</p>
+              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Students</h1>
+              <p className="text-sm sm:text-base text-gray-600 mt-1">Manage and monitor student progress</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => setShowAddModal(true)}
-                className="inline-flex items-center justify-center px-4 py-2 bg-primary text-white font-medium rounded-xl hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200"
+                className="inline-flex items-center justify-center px-4 py-2.5 bg-primary text-white font-medium rounded-xl hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 active:scale-95 text-sm sm:text-base"
               >
-                <Plus className="h-5 w-5 mr-2" />
+                <Plus className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Add Student
               </button>
-              <button className="inline-flex items-center justify-center px-4 py-2 bg-white text-gray-700 font-medium rounded-xl border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200">
-                <Download className="h-5 w-5 mr-2" />
+              <button className="inline-flex items-center justify-center px-4 py-2.5 bg-white text-gray-700 font-medium rounded-xl border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 active:scale-95 text-sm sm:text-base">
+                <Download className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Export List
               </button>
             </div>
@@ -138,124 +138,126 @@ export default function Students() {
         {/* Main Content */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           {/* Search and Filter Bar */}
-          <div className="p-6 border-b border-gray-100">
+          <div className="p-4 sm:p-6 border-b border-gray-100">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <div className="relative flex-1 max-w-md w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search students..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-50 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                 />
               </div>
               <div className="flex items-center gap-3">
-                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-all duration-200">
-                  <Filter className="h-5 w-5 mr-2" />
+                <button className="inline-flex items-center px-4 py-2.5 text-sm sm:text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-all duration-200 active:scale-95">
+                  <Filter className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   Filter
-                  <ChevronDown className="h-4 w-4 ml-2" />
+                  <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
                 </button>
               </div>
             </div>
           </div>
 
           {/* Table */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                    Student
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                    Contact
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                    Courses
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                    Progress
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                    Status
-                  </th>
-                  <th className="px-6 py-4 text-right text-sm font-semibold text-gray-900">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {students.map((student) => (
-                  <tr
-                    key={student.id}
-                    className="group hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <img
-                          src={student.image}
-                          alt={student.name}
-                          className="h-10 w-10 rounded-xl object-cover group-hover:scale-105 transition-transform duration-200"
-                        />
-                        <div className="ml-4">
-                          <p className="text-sm font-medium text-gray-900">{student.name}</p>
-                          <p className="text-sm text-gray-500">{student.email}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center space-x-3">
-                        <button className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors duration-200">
-                          <Mail className="h-4 w-4" />
-                        </button>
-                        <button className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors duration-200">
-                          <Phone className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <span className="text-sm text-gray-900 font-medium">
-                          {student.enrolledCourses}
-                        </span>
-                        <span className="text-sm text-gray-500 ml-1">courses</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
-                            style={{ width: `${student.progress}%` }}
-                          />
-                        </div>
-                        <span className="ml-3 text-sm font-medium text-gray-900">
-                          {student.progress}%
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        student.status === 'active'
-                          ? 'bg-green-50 text-green-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}>
-                        {student.status === 'active' && <CheckCircle2 className="w-3 h-3 mr-1" />}
-                        {student.status !== 'active' && <AlertCircle className="w-3 h-3 mr-1" />}
-                        {student.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => setSelectedStudent(student.id)}
-                        className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors duration-200"
-                      >
-                        <MoreVertical className="h-5 w-5" />
-                      </button>
-                    </td>
+          <div className="overflow-x-auto -mx-6 sm:mx-0">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="bg-gray-50">
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">
+                      Student
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">
+                      Contact
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">
+                      Courses
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">
+                      Progress
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">
+                      Status
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-right text-xs sm:text-sm font-semibold text-gray-900">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {students.map((student) => (
+                    <tr
+                      key={student.id}
+                      className="group hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                        <div className="flex items-center">
+                          <img
+                            src={student.image}
+                            alt={student.name}
+                            className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl object-cover group-hover:scale-105 transition-transform duration-200"
+                          />
+                          <div className="ml-3 sm:ml-4">
+                            <p className="text-sm sm:text-base font-medium text-gray-900">{student.name}</p>
+                            <p className="text-xs sm:text-sm text-gray-500">{student.email}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <button className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors duration-200 active:scale-95">
+                            <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                          </button>
+                          <button className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors duration-200 active:scale-95">
+                            <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                          </button>
+                        </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                        <div className="flex items-center">
+                          <span className="text-sm sm:text-base text-gray-900 font-medium">
+                            {student.enrolledCourses}
+                          </span>
+                          <span className="text-xs sm:text-sm text-gray-500 ml-1">courses</span>
+                        </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                        <div className="flex items-center">
+                          <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
+                              style={{ width: `${student.progress}%` }}
+                            />
+                          </div>
+                          <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-gray-900">
+                            {student.progress}%
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-medium ${
+                          student.status === 'active'
+                            ? 'bg-green-50 text-green-700'
+                            : 'bg-gray-100 text-gray-700'
+                        }`}>
+                          {student.status === 'active' && <CheckCircle2 className="w-3 h-3 mr-1" />}
+                          {student.status !== 'active' && <AlertCircle className="w-3 h-3 mr-1" />}
+                          {student.status}
+                        </span>
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4 text-right">
+                        <button
+                          onClick={() => setSelectedStudent(student.id)}
+                          className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors duration-200 active:scale-95"
+                        >
+                          <MoreVertical className="h-5 w-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {/* Pagination */}
@@ -290,21 +292,21 @@ export default function Students() {
               <div className="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
               </div>
-              <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div className="bg-white px-6 pt-5 pb-6">
+              <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full max-w-lg">
+                <div className="bg-white px-4 sm:px-6 pt-5 pb-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-semibold text-gray-900">Add New Student</h3>
                     <button
                       onClick={() => setShowAddModal(false)}
-                      className="p-2 rounded-xl hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors duration-200"
+                      className="p-2 rounded-xl hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-all active:scale-95"
                     >
                       <X className="h-5 w-5" />
                     </button>
                   </div>
                   <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">
+                        <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                           First Name *
                         </label>
                         <input
@@ -312,11 +314,11 @@ export default function Students() {
                           required
                           value={formData.firstName}
                           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                          className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">
+                        <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                           Last Name *
                         </label>
                         <input
@@ -324,14 +326,14 @@ export default function Students() {
                           required
                           value={formData.lastName}
                           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                          className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">
+                        <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                           Email Address *
                         </label>
                         <input
@@ -339,76 +341,76 @@ export default function Students() {
                           required
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">
+                        <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                           Phone Number
                         </label>
                         <input
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
+                      <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                         Date of Birth
                       </label>
                       <input
                         type="date"
                         value={formData.dateOfBirth}
                         onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
+                      <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                         Address
                       </label>
                       <input
                         type="text"
                         value={formData.address}
                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">
+                        <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                           City
                         </label>
                         <input
                           type="text"
                           value={formData.city}
                           onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                          className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">
+                        <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                           Country
                         </label>
                         <input
                           type="text"
                           value={formData.country}
                           onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                          className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
+                      <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                         Assign Courses
                       </label>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                         {availableCourses.map((course) => (
                           <label key={course} className="flex items-center">
                             <input
@@ -429,21 +431,21 @@ export default function Students() {
                               }}
                               className="rounded border-gray-300 text-primary focus:ring-primary/20"
                             />
-                            <span className="ml-2 text-sm text-gray-900">{course}</span>
+                            <span className="ml-2 text-sm sm:text-base text-gray-900">{course}</span>
                           </label>
                         ))}
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
+                      <label className="block text-sm sm:text-base font-medium text-gray-900 mb-2">
                         Student ID
                       </label>
                       <input
                         type="text"
                         value={formData.studentId}
                         onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm sm:text-base"
                         placeholder="e.g., STU-2024-001"
                       />
                     </div>
@@ -452,14 +454,14 @@ export default function Students() {
                       <button
                         type="button"
                         onClick={() => setShowAddModal(false)}
-                        className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-colors duration-200"
+                        className="px-4 py-2.5 text-sm sm:text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-colors duration-200"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-xl hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200"
+                        className="inline-flex items-center px-4 py-2.5 bg-primary text-white text-sm sm:text-base font-medium rounded-xl hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200"
                       >
                         {isSubmitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                         {isSubmitting ? 'Adding...' : 'Add Student'}

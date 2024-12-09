@@ -100,112 +100,122 @@ export default function Reports() {
 
   return (
     <DashboardLayout role={isHR ? 'hr' : 'student'}>
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
-          >
-            <h1 className="text-2xl font-bold text-gray-900">Reports Dashboard</h1>
-            <div className="flex flex-wrap gap-4">
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="btn-outline group transition-all duration-300 ease-in-out"
-              >
-                <Calendar className="h-5 w-5 mr-2 group-hover:text-primary transition-colors" />
-                Schedule Report
-              </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setShowGenerateModal(true)}
-                className="btn-primary bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300"
-              >
-                <TrendingUp className="h-5 w-5 mr-2" />
-                Generate New Report
-              </motion.button>
-            </div>
-          </motion.div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-              <div className="flex flex-wrap items-center gap-4">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  className="relative"
+      <div className="min-h-screen bg-gray-50/30">
+        <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Mobile Header */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col gap-4 mb-6 sm:mb-8"
+            >
+              <div className="flex items-center justify-between">
+                <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                  Reports Dashboard
+                </h1>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                <motion.button 
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center justify-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-200 hover:border-primary/60 hover:text-primary transition-all duration-200 shadow-sm"
                 >
-                  <select 
-                    className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2 pr-10 text-sm font-medium text-gray-700 hover:border-primary transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    value={selectedFilter}
-                    onChange={(e) => setSelectedFilter(e.target.value)}
-                  >
-                    <option value="all">All Types</option>
-                    <option value="Performance">Performance</option>
-                    <option value="Analytics">Analytics</option>
-                    <option value="Academic">Academic</option>
-                  </select>
-                  <Filter className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-                </motion.div>
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                  Schedule Report
+                </motion.button>
+                <motion.button 
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowGenerateModal(true)}
+                  className="flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-primary to-primary/80 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+                >
+                  <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                  Generate Report
+                </motion.button>
+              </div>
+            </motion.div>
+
+            {/* Reports Section */}
+            <div className="bg-white rounded-xl shadow-sm">
+              <div className="p-4 sm:p-6 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <motion.div whileTap={{ scale: 0.97 }} className="relative flex-1 sm:flex-none">
+                      <select 
+                        className="w-full sm:w-auto appearance-none bg-white border border-gray-200 rounded-lg px-3 py-2 pr-9 text-sm font-medium text-gray-700 hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                        value={selectedFilter}
+                        onChange={(e) => setSelectedFilter(e.target.value)}
+                      >
+                        <option value="all">All Types</option>
+                        <option value="Performance">Performance</option>
+                        <option value="Analytics">Analytics</option>
+                        <option value="Academic">Academic</option>
+                      </select>
+                      <Filter className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 sm:p-6">
+                <AnimatePresence>
+                  {isLoading ? (
+                    <div className="space-y-3 sm:space-y-4">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="animate-pulse">
+                          <div className="h-24 bg-gray-100 rounded-lg"></div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="space-y-3 sm:space-y-4"
+                    >
+                      {filteredReports.map((report) => (
+                        <motion.div
+                          key={report.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          whileHover={{ scale: 1.01 }}
+                          className="group flex flex-col p-4 sm:p-6 bg-white rounded-xl border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all duration-200"
+                        >
+                          <div className="flex-1 mb-4 sm:mb-0">
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                              {report.name}
+                            </h3>
+                            <p className="text-xs sm:text-sm text-gray-600 mt-1">{report.description}</p>
+                            <div className="flex flex-wrap items-center gap-2 mt-3">
+                              <span className="text-[10px] sm:text-xs text-gray-500">
+                                Last generated: {report.lastGenerated}
+                              </span>
+                              <span className="text-[10px] sm:text-xs px-2 py-0.5 bg-primary/10 text-primary rounded-full font-medium">
+                                {report.type}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex justify-end">
+                            <motion.button 
+                              whileTap={{ scale: 0.95 }}
+                              className="flex items-center px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-primary hover:text-white hover:bg-primary rounded-lg transition-all duration-200"
+                            >
+                              <Download className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" />
+                              Download
+                            </motion.button>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
-
-            <AnimatePresence>
-              {isLoading ? (
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="animate-pulse">
-                      <div className="h-24 bg-gray-100 rounded-lg"></div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-4"
-                >
-                  {filteredReports.map((report) => (
-                    <motion.div
-                      key={report.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      whileHover={{ scale: 1.01 }}
-                      className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white rounded-xl border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all duration-300"
-                    >
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
-                          {report.name}
-                        </h3>
-                        <p className="text-sm text-gray-600 mt-1">{report.description}</p>
-                        <div className="flex flex-wrap items-center gap-2 mt-3">
-                          <span className="text-xs text-gray-500">
-                            Last generated: {report.lastGenerated}
-                          </span>
-                          <span className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full font-medium">
-                            {report.type}
-                          </span>
-                        </div>
-                      </div>
-                      <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="mt-4 md:mt-0 flex items-center px-4 py-2 text-sm font-medium text-primary hover:text-white hover:bg-primary rounded-lg transition-all duration-300"
-                      >
-                        <Download className="h-5 w-5 mr-2" />
-                        Download
-                      </motion.button>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         </div>
       </div>
 
+      {/* Generate Report Modal - Mobile Optimized */}
       <AnimatePresence>
         {showGenerateModal && (
           <motion.div 
@@ -220,35 +230,35 @@ export default function Reports() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
             >
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Generate New Report</h2>
+              <div className="sticky top-0 bg-white border-b border-gray-100 p-4 sm:p-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-900">Generate New Report</h2>
                   <motion.button
-                    whileHover={{ scale: 1.1, rotate: 90 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setShowGenerateModal(false)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
                   >
-                    <X className="h-6 w-6" />
+                    <X className="h-5 w-5 sm:h-6 sm:w-6" />
                   </motion.button>
                 </div>
+              </div>
 
+              <div className="p-4 sm:p-6">
                 <form onSubmit={handleGenerate} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-4">
                       Report Type
                     </label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
                       {reportTypes.map((type) => {
                         const Icon = type.icon;
                         return (
                           <motion.label
                             key={type.id}
-                            whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`flex items-start p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                            className={`flex items-start p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all ${
                               formData.reportType === type.id
-                                ? 'border-primary bg-primary/5 shadow-md'
+                                ? 'border-primary bg-primary/5 shadow-sm'
                                 : 'border-gray-200 hover:border-primary/60'
                             }`}
                           >
@@ -260,12 +270,12 @@ export default function Reports() {
                               onChange={(e) => setFormData({ ...formData, reportType: e.target.value })}
                               className="sr-only"
                             />
-                            <Icon className={`h-6 w-6 ${
+                            <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${
                               formData.reportType === type.id ? 'text-primary' : 'text-gray-400'
                             } transition-colors`} />
-                            <div className="ml-4">
+                            <div className="ml-3 sm:ml-4">
                               <p className="text-sm font-medium text-gray-900">{type.name}</p>
-                              <p className="text-sm text-gray-500 mt-1">{type.description}</p>
+                              <p className="text-xs sm:text-sm text-gray-500 mt-1">{type.description}</p>
                             </div>
                           </motion.label>
                         );
@@ -273,31 +283,29 @@ export default function Reports() {
                     </div>
                   </div>
 
-                  <div className="flex justify-end gap-4">
+                  <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 border-t border-gray-100">
                     <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileTap={{ scale: 0.95 }}
                       type="button"
                       onClick={() => setShowGenerateModal(false)}
-                      className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors"
+                      className="w-full sm:w-auto px-4 py-2.5 text-sm font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
                     >
                       Cancel
                     </motion.button>
                     <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileTap={{ scale: 0.95 }}
                       type="submit"
                       disabled={isGenerating}
-                      className="btn-primary flex items-center"
+                      className="w-full sm:w-auto flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-primary to-primary/80 rounded-lg shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                     >
                       {isGenerating ? (
                         <>
-                          <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                          <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" />
                           Generating...
                         </>
                       ) : (
                         <>
-                          <TrendingUp className="h-5 w-5 mr-2" />
+                          <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                           Generate Report
                         </>
                       )}

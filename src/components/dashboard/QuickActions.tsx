@@ -40,23 +40,23 @@ const actions = [
 export default function QuickActions() {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-dark mb-4">Quick Actions</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Quick Actions</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {actions.map((action) => {
           const Icon = action.icon;
           return (
             <Link
               key={action.name}
               to={action.href}
-              className="group bg-white rounded-airbnb p-6 shadow-airbnb hover:shadow-airbnb-hover transition-all duration-300"
+              className="group bg-white rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-300"
             >
               <div className="flex items-center">
-                <div className={`p-3 rounded-lg ${action.bgColor} group-hover:scale-110 transition-transform`}>
-                  <Icon className={`h-6 w-6 ${action.color}`} />
+                <div className={`p-2.5 sm:p-3 rounded-lg ${action.bgColor} group-hover:scale-110 transition-transform`}>
+                  <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${action.color}`} />
                 </div>
-                <div className="ml-4">
-                  <p className="text-base font-semibold text-dark">{action.name}</p>
-                  <p className="text-sm text-light">{action.description}</p>
+                <div className="ml-3 sm:ml-4">
+                  <p className="text-sm sm:text-base font-semibold text-gray-900">{action.name}</p>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-0.5">{action.description}</p>
                 </div>
               </div>
             </Link>

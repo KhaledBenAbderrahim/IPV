@@ -92,7 +92,7 @@ export default function HRDashboard() {
 
   return (
     <DashboardLayout role="hr">
-      <div className="space-y-3 sm:space-y-6 px-3 sm:px-6 py-3 sm:py-6">
+      <div className="min-h-screen space-y-3 sm:space-y-6 px-3 sm:px-6 py-3 sm:py-6">
         {/* Welcome Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -100,36 +100,37 @@ export default function HRDashboard() {
           className="relative overflow-hidden bg-gradient-to-br from-primary via-primary-dark to-accent rounded-lg sm:rounded-xl p-4 sm:p-6"
         >
           <div className="relative z-10">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1">Welcome back, Admin! 👋</h1>
-            <p className="text-sm sm:text-base text-white/90">Here's what's happening with your learning platform today.</p>
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1">Welcome back, Admin! 👋</h1>
+            <p className="text-xs sm:text-sm text-white/90 leading-relaxed">Here's what's happening with your learning platform today.</p>
           </div>
           <div className="absolute top-0 right-0 w-24 sm:w-48 h-24 sm:h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-16 sm:w-32 h-16 sm:h-32 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-xl"></div>
         </motion.div>
 
         {/* Metrics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {metrics.map((metric) => {
             const Icon = metric.icon;
             return (
               <motion.div
                 key={metric.id}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setShowMetricDetails(metric.id)}
                 className="group bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100 cursor-pointer"
               >
                 <div className="flex items-center justify-between">
-                  <div className={`p-2 rounded-lg ${metric.bgColor} group-hover:scale-105 transition-transform duration-200`}>
+                  <div className={`p-2 sm:p-2.5 rounded-lg ${metric.bgColor} group-hover:scale-105 transition-transform duration-200`}>
                     <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${metric.color}`} />
                   </div>
                   <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 group-hover:scale-105 transition-transform duration-200`}>
                     {metric.change}
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mt-2 group-hover:translate-x-0.5 transition-transform duration-200">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 mt-2 group-hover:translate-x-0.5 transition-transform duration-200">
                   {metric.value}
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-600">{metric.name}</p>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5">{metric.name}</p>
               </motion.div>
             );
           })}
@@ -142,22 +143,22 @@ export default function HRDashboard() {
             animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-2 bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-100 p-3 sm:p-4"
           >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 space-y-2 sm:space-y-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-4">
               <div>
-                <h2 className="text-base sm:text-lg font-semibold text-gray-900">Performance Overview</h2>
-                <p className="text-xs text-gray-600">Student engagement and completion rates</p>
+                <h2 className="text-sm sm:text-base font-semibold text-gray-900">Performance Overview</h2>
+                <p className="text-xs text-gray-600 mt-0.5">Student engagement and completion rates</p>
               </div>
               <select 
                 value={selectedTimeRange}
                 onChange={(e) => setSelectedTimeRange(e.target.value)}
-                className="text-sm border border-gray-200 bg-gray-50 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="w-full sm:w-auto text-xs sm:text-sm border border-gray-200 bg-gray-50 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               >
                 <option value="6months">Last 6 months</option>
                 <option value="1year">Last year</option>
                 <option value="all">All time</option>
               </select>
             </div>
-            <div className="h-48 sm:h-64">
+            <div className="h-40 sm:h-48 lg:h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={performanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
@@ -171,8 +172,8 @@ export default function HRDashboard() {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                  <XAxis dataKey="month" stroke="#94a3b8" fontSize={12} tickMargin={8} />
-                  <YAxis stroke="#94a3b8" fontSize={12} />
+                  <XAxis dataKey="month" stroke="#94a3b8" fontSize={10} tickMargin={8} />
+                  <YAxis stroke="#94a3b8" fontSize={10} />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: 'white',
@@ -180,6 +181,7 @@ export default function HRDashboard() {
                       borderRadius: '8px',
                       boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
                       padding: '8px',
+                      fontSize: '12px'
                     }}
                   />
                   <Area
@@ -209,17 +211,17 @@ export default function HRDashboard() {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-100 p-3 sm:p-4"
           >
-            <h2 className="text-base sm:text-lg font-semibold text-gray-900">Course Distribution</h2>
-            <p className="text-xs text-gray-600 mb-3">Overview of course statuses</p>
-            <div className="h-40 sm:h-48">
+            <h2 className="text-sm sm:text-base font-semibold text-gray-900">Course Distribution</h2>
+            <p className="text-xs text-gray-600 mt-0.5 mb-3">Overview of course statuses</p>
+            <div className="h-32 sm:h-40 lg:h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={courseDistribution}
                     cx="50%"
                     cy="50%"
-                    innerRadius={40}
-                    outerRadius={60}
+                    innerRadius={30}
+                    outerRadius={45}
                     paddingAngle={5}
                     dataKey="value"
                   >
@@ -250,12 +252,13 @@ export default function HRDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-100 p-3 sm:p-4"
         >
-          <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">Recent Activities</h2>
-          <div className="space-y-3">
+          <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3">Recent Activities</h2>
+          <div className="space-y-2 sm:space-y-3">
             {recentActivities.map((activity) => (
-              <div
+              <motion.div
                 key={activity.id}
-                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                whileHover={{ scale: 1.01 }}
+                className="flex items-center space-x-2 sm:space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-all duration-200"
               >
                 <img
                   src={activity.image}
@@ -263,18 +266,18 @@ export default function HRDashboard() {
                   className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
+                  <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                     {activity.user}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 truncate">
                     {activity.action} <span className="font-medium">{activity.subject}</span>
                   </p>
                 </div>
-                <div className="flex items-center text-xs text-gray-500">
+                <div className="flex items-center text-xs text-gray-500 whitespace-nowrap">
                   <Clock className="h-3 w-3 mr-1" />
                   {activity.time}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
