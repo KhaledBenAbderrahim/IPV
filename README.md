@@ -13,13 +13,53 @@ Check out our live demo: [IPV Platform](https://ipv-gules.vercel.app/)
     <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/IPV%20-%20iPhone%2015%20Pro.png" alt="Mobile View" width="32%" />
 </div>
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **Responsive Design**: Enjoy a seamless experience on any device, whether you're on a desktop or mobile
-- **Interactive Components**: Engage with dynamic content through interactive components and animations
-- **Personalized Dashboard**: Tailor your learning experience with a personalized dashboard that tracks your progress and achievements
-- **Community Support**: Connect with peers and educators through integrated community features
-- **Advanced Analytics**: Gain insights into your learning journey with detailed analytics and reports
+### Authentication & Security
+- **Role-Based Access Control**: Separate login portals for HR managers and students
+- **Secure Authentication**: Email and password-based authentication with validation
+- **Protected Routes**: Role-specific access to dashboard and features
+- **Session Management**: Persistent login sessions with secure token handling
+
+### HR Dashboard Features
+- **Student Management**:
+  - Comprehensive student database
+  - Add/manage student profiles
+  - Track student progress and performance
+  - Export student data functionality
+- **Analytics & Reporting**:
+  - Real-time performance metrics
+  - Course completion rates
+  - Student engagement analytics
+  - Interactive charts and visualizations
+- **Course Management**:
+  - Course creation and assignment
+  - Progress tracking
+  - Resource allocation
+  - Schedule management
+
+### Student Features
+- **Profile Management**:
+  - Personal information updates
+  - Educational background
+  - Course enrollment history
+  - Achievement tracking
+- **Learning Dashboard**:
+  - Current course progress
+  - Upcoming assignments
+  - Performance statistics
+  - Achievement badges
+- **Course Interaction**:
+  - Interactive learning materials
+  - Progress tracking
+  - Course completion certificates
+  - Peer interaction capabilities
+
+### User Interface
+- **Responsive Design**: Seamless experience across all devices
+- **Modern UI/UX**: Clean and intuitive interface with smooth animations
+- **Interactive Components**: Dynamic content loading and real-time updates
+- **Accessibility**: WCAG compliant design for inclusive learning
 
 ## 🛠️ Technology Stack
 
@@ -27,6 +67,7 @@ Check out our live demo: [IPV Platform](https://ipv-gules.vercel.app/)
 - React.js with TypeScript
 - Modern UI/UX design principles
 - Responsive layout for all devices
+- Framer Motion for animations
 
 ### Backend (Private Repository)
 - PostgreSQL Database
@@ -76,6 +117,5 @@ For questions or support, please reach out through GitHub:
 ---
 
 Thank you for choosing IPV as your learning platform. We hope you have a great experience!
-
 
 demo : https://ipv-gules.vercel.app/
